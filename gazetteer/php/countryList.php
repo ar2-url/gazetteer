@@ -1,6 +1,10 @@
 <?php
 
-$content = file_get_contents('../vendors/countries/countries_large.geo.json');
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
+$content = file_get_contents('../vendors/countries/countries_small.geo.json');
+$content = utf8_decode($content);
 
 $decoded = json_decode($content, true);
 
@@ -9,7 +13,7 @@ $info = '';
 $name = $_REQUEST['countryName'];
 
 foreach ($decoded['features'] as $feature) {
-    if ($feature['properties']['ADMIN'] == $name) {
+    if ($feature['properties']['name'] == $name) {
         $info = $feature;
     break;
     } else {

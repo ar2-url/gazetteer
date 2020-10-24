@@ -24,5 +24,5 @@ foreach ($data['rates'] as $currency=>$value) {
     } 
 } 
 
-echo $outcome;
+echo json_encode($outcome);
 

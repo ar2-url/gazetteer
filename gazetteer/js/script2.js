@@ -55,6 +55,7 @@ navigator.geolocation.getCurrentPosition(position => {
         }, result => {
             let decoded = JSON.parse(result)
             let border = L.geoJSON(decoded).addTo(mymap)
+            
             mymap.fitBounds(border.getBounds())
             $('#element1').slideDown()
             //get population, capital, currency
@@ -62,7 +63,6 @@ navigator.geolocation.getCurrentPosition(position => {
                 countryName: country
             }, popAndCap => {
                 let popAndCapPar = JSON.parse(popAndCap)
-                console.log(popAndCapPar)
                 if (!popAndCapPar) {
                     $('#element').append('No data')
                 } else {
@@ -74,7 +74,7 @@ navigator.geolocation.getCurrentPosition(position => {
                          <img src="${popAndCapPar['flag']}" alt="CountryFlag" width="200px" opacity="1"/><br>`
                     )
                 }
-                // get rate agains USD
+                // get rate against USD
                 let code = popAndCapPar['curr_Code']
                 $.post('php/getRate.php', {
                     code: code
@@ -89,7 +89,6 @@ navigator.geolocation.getCurrentPosition(position => {
                             country: popAndCapPar['name']
                         }, links => {
                             let linkDec = JSON.parse(links)
-                            console.log(linkDec)
                             if (!linkDec) {
                                 $('#element').append('No data')
                             } else {
@@ -141,7 +140,6 @@ const getCountrySpec = e => {
             $.post('php/getStuff1.php', {
                 countryName: e.target.innerHTML
             }, popAndCap => {
-                console.log(popAndCap)
                 let popAndCapPar = JSON.parse(popAndCap)
                 if (!popAndCapPar && popAndCapPar['status'] != 'ok') {
                     $('#element').html('No data')
@@ -169,7 +167,6 @@ const getCountrySpec = e => {
                             country: popAndCapPar['name']
                         }, links => {
                             let linkDec = JSON.parse(links)
-                            console.log(linkDec)
                             if (!linkDec) {
                                 $('#element').append('No data')
                             } else {

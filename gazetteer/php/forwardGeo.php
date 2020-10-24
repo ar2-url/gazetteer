@@ -18,8 +18,8 @@ curl_close($ch);
 
 $decoded = json_decode($result, true);
 
-$latln[] = $decoded[0]['lat'];
-$latln[] = $decoded[0]['lon'];
-$latln[] = $decoded[0]['boundingbox'];
+$latln['lat'] = $decoded[0]['lat'];
+$latln['lon'] = $decoded[0]['lon'];
+$latln['boundingbox'] = $decoded[0]['boundingbox'];
 
 echo json_encode($latln);
