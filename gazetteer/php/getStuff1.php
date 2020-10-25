@@ -6,22 +6,20 @@ error_reporting(E_ALL);
 $url = 'https://restcountries.eu/rest/v2/name/' . $_REQUEST['countryName'];
 
 $ch = curl_init($url);
-
+error_log("Curl Object:".print_r($ch,true));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
 curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
 
-if(curl_errno($ch)){
-    echo 'Request Error:' . curl_error($ch);
-}
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 curl_close($ch);
 
 $data = json_decode($result, true); 
 
-    $outcome['status'] = 'ok';
+    $outcome['status'] = $httpCode;
     $outcome['capital'] = $data[0]['capital'];
     $outcome['population'] = $data[0]['population'];
     $outcome['curr_Code'] = $data[0]['currencies'][0]['code'];

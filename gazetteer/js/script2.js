@@ -55,7 +55,6 @@ navigator.geolocation.getCurrentPosition(position => {
         }, result => {
             let decoded = JSON.parse(result)
             let border = L.geoJSON(decoded).addTo(mymap)
-            
             mymap.fitBounds(border.getBounds())
             $('#element1').slideDown()
             //get population, capital, currency
@@ -177,7 +176,7 @@ const getCountrySpec = e => {
                                 }, weather => {
                                     let weatherDec = JSON.parse(weather)
                                     if (!weatherDec) {
-                                        $('#weather').html('No data')
+                                        
                                     } else {
                                         $('#weather').html(
                                             `<h5>Today</h5><br>
