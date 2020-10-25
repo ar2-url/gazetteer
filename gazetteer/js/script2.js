@@ -71,7 +71,7 @@ navigator.geolocation.getCurrentPosition(position => {
                          <p>Capital: ${popAndCapPar['capital']}</p><br>
                          <p>Population: ${popAndCapPar['population']}</p><br>
                          <p>Currency: ${popAndCapPar['curr_Code']}/ ${popAndCapPar['curr_Name']}/ ${popAndCapPar['curr_Symbol']}</p><br>
-                         <img src="${popAndCapPar['flag']}" alt="CountryFlag" width="200px" opacity="1"/><br>`
+                         <img src="${popAndCapPar['flag']}" alt="CountryFlag" class="img-fluid" opacity="1"/><br>`
                     )
                 }
                 // get rate against USD
@@ -104,12 +104,12 @@ navigator.geolocation.getCurrentPosition(position => {
                                     } else {
                                         $('#weather').html(
                                             `<h5>Today</h5><br>
-                                             <img src="http://openweathermap.org/img/wn/${weatherDec['icon']}@2x.png" /><br>
+                                             <img src="http://openweathermap.org/img/wn/${weatherDec['icon']}@2x.png" class="img-fluid" /><br>
                                              <p>${weatherDec['description']}</p><br>
                                              <p>Temperature: ${weatherDec['temperature']}<sup>o</sup>C</p><br>
                                              <hr>
                                              <h5>Tomorrow</h5><br>
-                                             <img src="http://openweathermap.org/img/wn/${weatherDec['tomorrow']['icon']}@2x.png" /><br>
+                                             <img src="http://openweathermap.org/img/wn/${weatherDec['tomorrow']['icon']}@2x.png" class="img-fluid" /><br>
                                              <p>${weatherDec['tomorrow']['description']}</p>
                                              <p>Temperature: ${weatherDec['tomorrow']['temperature']}<sup>o</sup>C</p><br>`
                                         )
@@ -149,7 +149,7 @@ const getCountrySpec = e => {
                          <p>Capital: ${popAndCapPar['capital']}</p><br>
                          <p>Population: ${popAndCapPar['population']}</p><br>
                          <p>Currency: ${popAndCapPar['curr_Code']}/ ${popAndCapPar['curr_Name']}/ ${popAndCapPar['curr_Symbol']}</p><br>
-                         <img src="${popAndCapPar['flag']}" alt="CountryFlag" width="200px" opacity="1"/><br>`
+                         <img src="${popAndCapPar['flag']}" alt="CountryFlag" class="img-fluid" opacity="1"/><br>`
                     )
                 }
                 //get rate against dollar
@@ -181,12 +181,12 @@ const getCountrySpec = e => {
                                     } else {
                                         $('#weather').html(
                                             `<h5>Today</h5><br>
-                                             <img src="http://openweathermap.org/img/wn/${weatherDec['icon']}@2x.png" /><br>
+                                             <img src="http://openweathermap.org/img/wn/${weatherDec['icon']}@2x.png" class="img-fluid" /><br>
                                              <p>${weatherDec['description']}</p><br>
                                              <p>Temperature: ${weatherDec['temperature']}<sup>o</sup>C</p><br>
                                              <hr style="color: white;">
                                              <h5>Tomorrow</h5><br>
-                                             <img src="http://openweathermap.org/img/wn/${weatherDec['tomorrow']['icon']}@2x.png" /><br>
+                                             <img src="http://openweathermap.org/img/wn/${weatherDec['tomorrow']['icon']}@2x.png" class="img-fluid"/><br>
                                              <p>${weatherDec['tomorrow']['description']}</p>
                                              <p>Temperature: ${weatherDec['tomorrow']['temperature']}<sup>o</sup>C</p><br>`
                                         )

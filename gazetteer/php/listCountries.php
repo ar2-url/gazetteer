@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 'On');
+error_reporting(E_ALL);
+
 $countries = file_get_contents('../vendors/countries/countries_small.geo.json');
 
 $decoded = json_decode($countries, true);
