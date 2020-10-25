@@ -15,4 +15,4 @@ $result = curl_exec($ch);
 
 curl_close($ch);
 
-echo jsoon_encde($result);
+echo $result;
