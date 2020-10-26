@@ -62,17 +62,15 @@ navigator.geolocation.getCurrentPosition(position => {
                 countryName: country
             }, popAndCap => {
                 let popAndCapPar = JSON.parse(popAndCap)
-                if (!popAndCapPar) {
-                    $('#element').append('No data')
-                } else {
-                    $('#element').html(
-                        `<h5>${popAndCapPar['name']}</h5><br>
-                         <p>Capital: ${popAndCapPar['capital']}</p><br>
-                         <p>Population: ${popAndCapPar['population']}</p><br>
-                         <p>Currency: ${popAndCapPar['curr_Code']}/ ${popAndCapPar['curr_Name']}/ ${popAndCapPar['curr_Symbol']}</p><br>
-                         <img src="${popAndCapPar['flag']}" alt="CountryFlag" class="img-fluid" opacity="1"/><br>`
-                    )
-                }
+                
+                $('#element').html(
+                    `<h5>${popAndCapPar['name']}</h5><br>
+                    <p>Capital: ${popAndCapPar['capital']}</p><br>
+                    <p>Population: ${popAndCapPar['population']}</p><br>
+                    <p>Currency: ${popAndCapPar['curr_Code']}/ ${popAndCapPar['curr_Name']}/ ${popAndCapPar['curr_Symbol']}</p><br>
+                    <img src="${popAndCapPar['flag']}" alt="CountryFlag" class="img-fluid" opacity="1"/><br>`
+                )
+                
                 // get rate against USD
                 let code = popAndCapPar['curr_Code']
                 $.post('php/getRate.php', {
@@ -97,7 +95,6 @@ navigator.geolocation.getCurrentPosition(position => {
                                     capital: popAndCapPar['capital']
                                 }, weather => {
                                     let weatherDec = JSON.parse(weather)
-                                    console.log(weatherDec)
                                     if (!weatherDec) {
                                         $('#weather').html('No data')
                                     } else {
@@ -140,16 +137,16 @@ const getCountrySpec = e => {
                 countryName: e.target.innerHTML
             }, popAndCap => {
                 let popAndCapPar = JSON.parse(popAndCap)
-                if (!popAndCapPar && popAndCapPar['status'] != 'ok') {
-                    $('#element').html('No data')
+                if (popAndCapPar['message'] == 'No data') {
+                    $('#element').html(`<h5>Error: ${popAndCapPar['message']}</h5></br>`)
                 } else {
-                    $('#element').html(
-                        `<h5>${popAndCapPar['name']}</h5><br>
-                         <p>Capital: ${popAndCapPar['capital']}</p><br>
-                         <p>Population: ${popAndCapPar['population']}</p><br>
-                         <p>Currency: ${popAndCapPar['curr_Code']}/ ${popAndCapPar['curr_Name']}/ ${popAndCapPar['curr_Symbol']}</p><br>
-                         <img src="${popAndCapPar['flag']}" alt="CountryFlag" class="img-fluid" opacity="1"/><br>`
-                    )
+                $('#element').html(
+                    `<h5>${popAndCapPar['name']}</h5><br>
+                    <p>Capital: ${popAndCapPar['capital']}</p><br>
+                    <p>Population: ${popAndCapPar['population']}</p><br>
+                    <p>Currency: ${popAndCapPar['curr_Code']}/ ${popAndCapPar['curr_Name']}/ ${popAndCapPar['curr_Symbol']}</p><br>
+                    <img src="${popAndCapPar['flag']}" alt="CountryFlag" class="img-fluid" opacity="1"/><br>`
+                )
                 }
                 //get rate against dollar
                 let code = popAndCapPar['curr_Code']
@@ -159,15 +156,16 @@ const getCountrySpec = e => {
                     if (!rate) {
                         $('#element').append('No data')
                     } else {
-                        // get wiki links
                         let rateDeco = JSON.parse(rate)
                         $('#element').append(`<br><p>Exchange rate: ${code}/USD ${rateDeco}</p>`)
+                        // get wiki links
                         $.post('php/getWiki.php', {
                             country: popAndCapPar['name']
                         }, links => {
                             let linkDec = JSON.parse(links)
-                            if (!linkDec) {
-                                $('#element').append('No data')
+                            
+                            if (linkDec['message'] == 'No data') {
+                                $('#element').append(`<h5>No data</h5></br>`)
                             } else {
                                 $('#element').append(`<br><a href="${linkDec}" style="color: whitesmoke; text-decoration: none;">Wikipedia</a>`)
                                 // get weather
@@ -175,8 +173,9 @@ const getCountrySpec = e => {
                                     capital: popAndCapPar['capital']
                                 }, weather => {
                                     let weatherDec = JSON.parse(weather)
-                                    if (!weatherDec) {
-                                        
+                                    console.log(weatherDec)
+                                    if (weatherDec['message'] == 'No data') {
+                                        $('#weather').html('<h5>No data</h5></br>')
                                     } else {
                                         $('#weather').html(
                                             `<h5>Today</h5><br>

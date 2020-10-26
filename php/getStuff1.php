@@ -22,7 +22,11 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 $data = json_decode($result, true); 
-
+if ($httpCode != 200) {
+    $outcome['status'] = $httpCode;
+    $outcome['message'] = 'No data';
+} else {
+   
     $outcome['status'] = $httpCode;
     $outcome['capital'] = $data[0]['capital'];
     $outcome['population'] = $data[0]['population'];
@@ -31,7 +35,8 @@ $data = json_decode($result, true);
     $outcome['curr_Symbol'] = $data[0]['currencies'][0]['symbol'];
     $outcome['flag'] = $data[0]['flag'];
     $outcome['name'] = $data[0]['name'];
-   
+}   
     echo json_encode($outcome);
+    
 
 
