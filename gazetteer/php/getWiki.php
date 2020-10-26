@@ -3,22 +3,34 @@
 ini_set('display_errors', 'On');
 error_reporting(E_ALL);
 
-$endPoint = "https://en.wikipedia.org/w/api.php";
-$params = [
-    "action" => "opensearch",
-    "search" => $_REQUEST['country'],
-    "limit" => "5",
-    "namespace" => "0",
-    "format" => "json"
-];
+if (!$_REQUEST) {
+    $outcome['message'] = 'No data';
+} else {
 
-$url = $endPoint . "?" . http_build_query( $params );
+    $endPoint = "https://en.wikipedia.org/w/api.php";
+    $params = [
+        "action" => "opensearch",
+        "search" => $_REQUEST['country'],
+        "limit" => "5",
+        "namespace" => "0",
+        "format" => "json"
+    ];
 
-$ch = curl_init( $url );
-curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
-$output = curl_exec( $ch );
-curl_close( $ch );
+    $url = $endPoint . "?" . http_build_query( $params );
 
-$decoded = json_decode($output);
+    $ch = curl_init( $url );
+    curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+    $output = curl_exec( $ch );
 
-echo json_encode($decoded[3][0]);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close( $ch );
+    $decoded = json_decode($output);
+
+    if ($httpCode != 200) {
+        $outcome['status'] = $httpCode;
+        $outcome['message'] = 'No data';
+    } else {
+        $outcome = $decoded[3][0];
+    }
+}
+echo json_encode($outcome);
