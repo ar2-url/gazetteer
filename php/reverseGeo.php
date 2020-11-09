@@ -13,6 +13,15 @@ curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
 
-curl_close($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
-echo $result;
+curl_close($ch);
+$decoded = json_decode($result, true);
+if ($httpCode != 200) {
+    $outcome = 'Not supported';
+} else {
+    
+    $outcome = $decoded['address']['country'];
+}
+
+echo json_encode($outcome);

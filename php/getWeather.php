@@ -1,51 +1,34 @@
-<?php
 
-ini_set('diplay_errors', 'On');
-error_reporting(E_ALL);
+// get landmarks coords and names using lat n lon from above
 
-$api_key = 'ad6e24a64254b73ff9e9cc4c08e43823';
-$url = 'api.openweathermap.org/data/2.5/weather?q=' . $_REQUEST['capital'] . '&appid=' . $api_key;
-$url2 = 'api.openweathermap.org/data/2.5/forecast?q=' . $_REQUEST['capital'] . '&appid=' . $api_key;
+$landmarks_key = 'mnVPO3LXrGQ2n6tkwqfkHJmo7-q1baNvxR_bAPhmXf4';
+$url = 'https://reverse.geocoder.ls.hereapi.com/6.2/reversegeocode.json?apiKey=' . $landmarks_key . '&mode=retrieveLandmarks&prox=' . $outcome['latlng']['lat'] . ',' . $outcome['latlng']['lon'] . ',1000000';
 
-$ch = curl_init($url);
+$ch = curl_init();
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_FAILONERROR, true);
 curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
 
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+if (curl_errno($ch)) {
+  $err_msg = curl_error($ch);
+}
 
 curl_close($ch);
 
-$decoded = json_decode($result, true);
 
-if ($httpCode != 200) {
-    $outcome['status'] = $httpCode;
-    $outcome['message'] = 'No data';
+if (isset($err_msg)) {
+  $outcome['landmarks'] = 'No data';
 } else {
-
-    $outcome['description'] = $decoded['weather'][0]['description'];
-    $outcome['temperature'] = round($decoded['main']['temp'] - 273);
-    $outcome['icon'] = $decoded['weather'][0]['icon'];
-
-    $ch = curl_init($url2);
-
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_URL, $url2);
-
-    $result = curl_exec($ch);
-
-    curl_close($ch);
-
-    $decoded = json_decode($result, true);
-
-    $outcome['tomorrow']['description'] = $decoded['list'][7]['weather'][0]['description'];
-    $outcome['tomorrow']['temperature'] = round($decoded['list'][7]['main']['temp'] - 273);
-    $outcome['tomorrow']['icon'] = $decoded['list'][7]['weather'][0]['icon'];
+  $decoded = json_decode($result, true);
+  for ($i = 0; $i < 10; $i++) {
+    $outcome['landmarks'][$i]['lat'] = $decoded['Response']['View'][0]['Result'][$i]['Location']['DisplayPosition']['Latitude'];
+    $outcome['landmarks'][$i]['lon'] = $decoded['Response']['View'][0]['Result'][$i]['Location']['DisplayPosition']['Longitude'];
+    $outcome['landmarks'][$i]['type'] = $decoded['Response']['View'][0]['Result'][$i]['Location']['LocationType'];
+    $outcome['landmarks'][$i]['name'] = $decoded['Response']['View'][0]['Result'][$i]['Location']['Name'];
+  }  
 }
-echo json_encode($outcome);
-
-

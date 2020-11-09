@@ -12,10 +12,9 @@
     
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="./vendors/bootstrap/css/bootstrap.css">
-    
     <link rel="stylesheet" href="./vendors/leaflet/leaflet.css" type="text/css">
-   
-    
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.css">
   </head>
   <body>
     
@@ -38,30 +37,18 @@
     </nav>
 
     <main class="container-fluid">
-      <div id="mapid" style="height: 100vh; z-index: 0;">
-        <div id="element1" class="container float-left" style="height: 80vh; width: 30vw; background-color: grey; opacity: 0.6; top: 10vh; z-index: 9999; position: relative; font-size: 2vh; color: white; text-align: left; line-height: 2vh; padding: 1vw; overflow-x: auto; overflow-y: auto;">
-          <div id="carouselEx" class="carousel slide" data-ride="carousel">
-            <ol class="carousel-indicators">
-              <li data-target="#carouselEx" data-slide-to="0" class="active"></li>
-              <li data-target="#carouselEx" data-slide-to="1"></li>
-            </ol>
-            <div class="carousel-inner">
-              <div class="carousel-item active" style="height: 80vh;">
-                <div id="element" class="h-100"></div>
-              </div>
-              <div class="carousel-item" style="height: 80vh;">
-                <div id="weather" class="h-100"></div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
+      <div id="mapid" class="container-fluid" style="height: 100vh; z-index: 0;">
+        <div id="element" style="text-align: center; z-index: 9999; position: relative; min-height: 40vh; min-width: 10vw; max-width: 15vw; left:78vw; top:2vh; background-color: azure;"></div>
       </div>
     </main>
+    
     <div id="preloader"></div>
 
     <script src="./vendors/jquery/jquery-3.5.1.js"></script>
     <script src="./vendors/bootstrap/js/bootstrap.js"></script>
     <script src="./vendors/leaflet/leaflet.js"></script>
-    <script src="./js/script2.js"></script>
+    <script src="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>
