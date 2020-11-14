@@ -28,9 +28,9 @@
         <ul class="nav navbar-nav ml-auto">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbardropdown" data-toggle="dropdown">
-              List of countries
+              Countries
             </a>
-            <div class="dropdown-menu dropdown-menu-right" id="countries" style="max-height: 50vh; overflow-x: hidden; overflow-y: scroll;"></div>
+            <div class="dropdown-menu dropdown-menu-right" id="countries"></div>
           </li>
         </ul>
       </div>
@@ -38,8 +38,22 @@
 
     <main class="container-fluid">
       
-      <div id="mapid" class="container-fluid" style="height: 100vh; z-index: 0;">
-        <div id="element" style="text-align: center; z-index: 9999; position: relative; min-height: 40vh; min-width: 10vw; max-width: 15vw; left:78vw; top:2vh; background-color: azure;"></div>
+      <div id="mapid" class="container-fluid">
+        <button type="button" id="modalButton" class="pull-right font-weight-bold" data-toggle="modal" data-target="#mymodal">Weather Forecast</button>
+        <div id="mymodal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id="element" class="modal-body">
+
+                      
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
       </div>
     </main>
     
@@ -52,3 +66,5 @@
     <script src="./js/script.js"></script>
 </body>
 </html>
+
+

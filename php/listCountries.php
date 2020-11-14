@@ -9,9 +9,19 @@ $decoded = json_decode($countries, true);
 
 $countriesList = [];
 
-foreach ($decoded['features'] as $code) {
+if ($decoded['features']) {
+    for ($i = 0; $i < count($decoded['features']); $i++) {
+        $countriesList[$i]['name'] = $decoded['features'][$i]['properties']['name'];
+        $countriesList[$i]['code'] = $decoded['features'][$i]['id'];
+    }
+}
 
-    $countriesList[] = $code['properties']['name'];
-} 
+function compare($a, $b) {
+    return strcmp($a['name'], $b['name']);
+}
+
+usort($countriesList, 'compare');
 
 echo json_encode($countriesList);
+
+?>

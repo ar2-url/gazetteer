@@ -45,3 +45,62 @@
 .carousel-item {
     height: 80vh;
 }
+
+.modal-backdrop.fade.show {
+    opacity: 0;
+    z-index: 0;
+}
+
+#countries.dropdown-menu.dropdown-menu-right.show {
+    z-index: 9999;
+}
+
+#modalButton {
+    background-image: url('../images/weather.png') !important;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 8vh;
+    width: 8vw;
+    z-index: 9999;
+    position: relative;
+    margin: 3vh;
+    border: none;
+    box-shadow: 3xp, 3px;
+    border-radius: 5px;
+}
+
+#modalButton:hover {
+    opacity: 0.7;
+}
+
+#countries {
+    max-height: 50vh; 
+    overflow-x: hidden; 
+    overflow-y: scroll;
+    z-index: 9999;
+    
+}
+
+.navbar {
+    height: 40px;
+}
+
+#mapid {
+    height: calc(100vh - 40px)
+}
+
+#element {
+    overflow: auto;
+    z-index: 9995;
+    position: relative;
+    padding: 0;
+}
+
+#navbardropdown {
+    z-index: 9999;
+    position: relative;
+}
+
+#weatherCar .carousel-indicators {
+    margin-bottom: 0;
+}

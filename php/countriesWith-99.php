@@ -27,12 +27,12 @@ $outcome['feature'] = $info;
 // get lat and lon
 
 $token = '5aa3fa0354022f';
-$url = 'https://eu1.locationiq.com/v1/search.php?key=' . $token . '&q=' . $countryName . '&format=json';
+$url = 'https://eu1.locationiq.com/v1/search.php?key=' . $token . '&q=' . $_REQUEST['countryName'] . '&format=json';
 
 $ch = curl_init();
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
@@ -51,12 +51,12 @@ if ($httpCode != 200) {
 
 //get capital, population, currency code, symbol
 
-$url = 'https://restcountries.eu/rest/v2/name/' . $countryName;
+$url = 'https://restcountries.eu/rest/v2/name/' . $_REQUEST['countryName'];
 
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
@@ -84,7 +84,7 @@ if ($httpCode != 200) {
     $outcome['curr_Name'] = $data[0]['currencies'][0]['name'];
     $outcome['curr_Symbol'] = $data[0]['currencies'][0]['symbol'];
     $outcome['flag'] = $data[0]['flag'];
-    $outcome['name'] = $data[0]['name'];
+    $outcome['name'] = $countryName;
    
 // get country cities 
 
@@ -93,9 +93,8 @@ $content = file_get_contents('../vendors/world-cities_zip/world_cities.json');
 $decoded = json_decode($content, true);
 
 $j = 0;
-$list[] = '';
 for ($i = 0; $i < count($decoded); $i++) {
-  if ($decoded[$i]['country'] == $countryName && $decoded[$i]['population'] > 200000) {
+  if ($decoded[$i]['country'] == $_REQUEST['countryName'] && $decoded[$i]['population'] > 200000) {
     $outcome['cities'][$j]['city'] = $decoded[$i]['city_ascii'];
     $outcome['cities'][$j]['lat'] = $decoded[$i]['lat'];
     $outcome['cities'][$j]['lng'] = $decoded[$i]['lng'];
@@ -114,7 +113,7 @@ $url = 'https://openexchangerates.org/api/latest.json?app_id=' . $rate_api_key;
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
@@ -134,37 +133,44 @@ foreach ($data['rates'] as $currency => $value) {
 
 // get 5 day weather forecast
 
-$api_key = 'ad6e24a64254b73ff9e9cc4c08e43823';
-$url = 'api.openweathermap.org/data/2.5/weather?q=' . $outcome['capital'] . '&appid=' . $api_key;
+$key = 'ad6e24a64254b73ff9e9cc4c08e43823';
+$url ='https://api.openweathermap.org/data/2.5/forecast?q=' . $outcome['capital'] . '&appid=' . $key;
 
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
 curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
-
 $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+$err = curl_error($ch);
 
 curl_close($ch);
-
 $decoded = json_decode($result, true);
 
-if ($httpCode != 200) {
-  $outcome['weather'] = 'No data';
+if (isset($decoded['list'])) {
+  for ($i = 0; $i < count($decoded['list']); $i++) {
+    $outcome['weather'][$i]['date'] = $decoded['list'][$i]['dt_txt'];
+    $outcome['weather'][$i]['temp'] = round($decoded['list'][$i]['main']['temp'] - 273);
+    $outcome['weather'][$i]['feels'] = round($decoded['list'][$i]['main']['feels_like'] - 273);
+    $outcome['weather'][$i]['pressure'] = $decoded['list'][$i]['main']['pressure'];
+    $outcome['weather'][$i]['description'] = $decoded['list'][$i]['weather'][0]['description'];
+    $outcome['weather'][$i]['icon'] = $decoded['list'][$i]['weather'][0]['icon'];
+if (isset($decoded['list'][$i]['rain'])) {
+    $outcome['weather'][$i]['rain'] = $decoded['list'][$i]['rain']['3h'];
 } else {
-    $outcome['weather']['description'] = $decoded['weather'][0]['description'];
-    $outcome['weather']['icon'] = $decoded['weather'][0]['icon'];
-    $outcome['weather']['temp'] = round($decoded['main']['temp']) - 273;
-    $outcome['weather']['feels'] = round($decoded['main']['feels_like']) - 273;
-    $outcome['weather']['sunrise'] = date('H:i:sa', $decoded['sys']['sunrise']);
-    $outcome['weather']['sunset'] = date('H:i:sa', $decoded['sys']['sunset']);
+    $outcome['weather'][$i]['rain'] = 0;
+}   
+}
+} else {
+  $outcome['list'] = 'No data';
 }
 // **************************************
 // get wiki paragraph
 
-$url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exsentences=10&exlimit=1&titles=' . $outcome['name'] . '&explaintext=1&formatversion=2';
+$url = 'https://en.wikipedia.org/w/api.php?action=query&format=json&prop=extracts&exsentences=10&exlimit=1&titles=' . $_REQUEST['countryName'] . '&explaintext=1&formatversion=2';
 
 $ch = curl_init( $url );
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
@@ -185,14 +191,16 @@ if ($httpCode != 200 || !$decoded->query->pages[0]->extract) {
 
 $access_key = '563492ad6f91700001000001300c4ca6a4e548b9b395bfd0848e7c44';
 
-$url ='https://api.pexels.com/v1/search?page=1&per_page=5&query=' . $countryName;
+$url ='https://api.pexels.com/v1/search?page=1&per_page=5&query=' . $_REQUEST['countryName'];
 
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-    'Authorization: ' . $access_key
+    'Authorization: ' . $access_key,
+    'Content-Type:image/jpeg',
+    'Access-Control-Allow-Origin: *'
 ));
 curl_setopt($ch, CURLOPT_URL, $url);
 
@@ -204,10 +212,10 @@ curl_close($ch);
 
 $decoded = json_decode($result, true);
 
-if ($httpCode == 200 || $err) {
-    foreach ($decoded['photos'] as $value) {
-        $outcome['photos'][] = $value['url'];
-     }
+if ($httpCode == 200 && !$err) {
+    for ($i = 0; $i < count($decoded['photos']); $i++) {
+        $outcome['photos'][] = $decoded['photos'][$i]['src']['small'];
+    }
 } else {
     $outcome['photos'] = 'No data';
 }
