@@ -18,11 +18,17 @@ curl_close($ch);
 
 $data = json_decode($result, true);
 
-foreach ($data['rates'] as $currency=>$value) {
-    if ($currency === $_REQUEST['code']) {
-        $outcome = $value;
+if (!$_REQUEST) {
+    $outcome = 'No data';
+    echo json_encode($outcome);
+} else {
+    foreach ($data['rates'] as $currency=>$value) {
+        if ($currency == $_REQUEST['code']) {
+            $outcome = $value;
+        } 
     } 
-} 
+    echo json_encode($outcome);
+}
 
-echo json_encode($outcome);
+
 
