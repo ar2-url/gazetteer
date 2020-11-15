@@ -108,3 +108,7 @@
 #weatherCar .carousel-indicators {
     margin-bottom: 0;
 }
+
+#weatherCar .carousel-item {
+    margin-top: 2vh;
+}
