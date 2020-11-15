@@ -67,12 +67,11 @@
     border: none;
     box-shadow: 3xp, 3px;
     border-radius: 5px;
+    left: 85vw;
 }
 
 #modalButton:hover {
     opacity: 0.7;
-    position: relative;
-    left: 85vw;
 }
 
 #countries {
