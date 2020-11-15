@@ -14,7 +14,7 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="./vendors/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="./vendors/leaflet/leaflet.css" type="text/css">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./vendors/fontawesome-free-5.15.1-web/css/fontawesome.css">
     <link rel="stylesheet" href="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.css">
   </head>
   <body>
