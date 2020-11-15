@@ -67,6 +67,7 @@
     border: none;
     box-shadow: 3xp, 3px;
     border-radius: 5px;
+    right: 5vw;
 }
 
 #modalButton:hover {
@@ -94,6 +95,7 @@
     z-index: 9995;
     position: relative;
     padding: 0;
+    right: 5vw;
 }
 
 #navbardropdown {
