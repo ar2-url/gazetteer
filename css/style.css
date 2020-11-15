@@ -74,6 +74,10 @@
     opacity: 0.7;
 }
 
+#modalButton:visited {
+    border: none;
+}
+
 #countries {
     max-height: 50vh; 
     overflow-x: hidden; 
