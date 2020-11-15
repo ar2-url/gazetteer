@@ -21,8 +21,8 @@
     
     <nav class="navbar navbar-expand-sm navbar-sticky-top bg-dark navbar-dark">
       <a class="navbar-brand" href="#">Gazetteer</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#items1">
-        <span class="navbar-toggler-icon-sm"></span>
+      <button class="navbar-toggler-sm" type="button" data-toggle="collapse" data-target="#items1">
+        <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="items1">
@@ -40,7 +40,7 @@
     <main class="container-fluid">
       
       <div id="mapid" class="container-fluid">
-        <button type="button" id="modalButton" class="pull-right" data-toggle="modal" data-target="#mymodal"></button>
+        <button type="button" id="modalButton" class="btn-block" data-toggle="modal" data-target="#mymodal"></button>
         <div id="mymodal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
