@@ -88,8 +88,7 @@
     z-index: 9999;
 }
 
-.navbar *{
-    height: 40px;
+.navbar > * { 
     position: relative;
     z-index: 9999;
 }
