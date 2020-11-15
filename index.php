@@ -40,7 +40,7 @@
     <main class="container-fluid">
       
       <div id="mapid" class="container-fluid">
-        <button type="button" id="modalButton" class="pull-right font-weight-bold" data-toggle="modal" data-target="#mymodal">Weather Forecast</button>
+        <button type="button" id="modalButton" class="pull-right font-weight-bold" data-toggle="modal" data-target="#mymodal"></button>
         <div id="mymodal" class="modal fade" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -67,5 +67,8 @@
     <script src="./js/script.js"></script>
 </body>
 </html>
+
+
+
 
 
