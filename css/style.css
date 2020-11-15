@@ -71,6 +71,8 @@
 
 #modalButton:hover {
     opacity: 0.7;
+    position: relative;
+    right: 5vw;
 }
 
 #countries {
