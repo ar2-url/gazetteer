@@ -132,7 +132,7 @@ $(window).on('load', function () {
               let weather = `
               <div class="carousel-item active h-50 w-70">
                 <p>${resultDec['weather'][0]['date']}</p>
-                <img src="http://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
+                <img src="https://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
                 <p>${resultDec['weather'][0]['description']}</p>
                 <p>Temp: ${resultDec['weather'][0]['temp']}<sup>o</sup>C</p>
                 <p>Feels like: ${resultDec['weather'][0]['feels']}<sup>o</sup>C</p>
@@ -143,7 +143,7 @@ $(window).on('load', function () {
               for (let i = 1; i < resultDec['weather'].length - 1; i++) {
                 weather += `<div class="carousel-item h-50 w-70">
                                 <p>${resultDec['weather'][i]['date']}</p>
-                                <img src="http://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
+                                <img src="https://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
                                 <p>${resultDec['weather'][i]['description']}</p>
                                 <p>Temp: ${resultDec['weather'][i]['temp']}<sup>o</sup>C</p>
                                 <p>Feels like: ${resultDec['weather'][i]['feels']}<sup>o</sup>C</p>
