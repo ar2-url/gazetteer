@@ -84,6 +84,8 @@
 
 .navbar {
     height: 40px;
+    position: relative;
+    z-index: 9999;
 }
 
 #mapid {
