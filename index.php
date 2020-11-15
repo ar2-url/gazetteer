@@ -22,7 +22,7 @@
     <nav class="navbar navbar-expand-sm navbar-sticky-top bg-dark navbar-dark">
       <a class="navbar-brand" href="#">Gazetteer</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#items1">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon-sm"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="items1">
