@@ -88,6 +88,12 @@
     z-index: 9999;
 }
 
+.navbar *{
+    height: 40px;
+    position: relative;
+    z-index: 9999;
+}
+
 #mapid {
     height: calc(100vh - 40px)
 }
