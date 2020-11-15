@@ -51,57 +51,27 @@
     z-index: 0;
 }
 
-#countries.dropdown-menu.dropdown-menu-right.show {
-    z-index: 9999;
-}
 
-#modalButton {
-    background-image: url('../images/weather.png') !important;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 8vh;
-    width: 8vw;
-    z-index: 9998;
-    position: relative;
-    margin: 3vh;
-    border: none;
-    box-shadow: 3xp, 3px;
-    border-radius: 5px;
-    left: 90vw;
-}
-
-#modalButton:hover {
-    opacity: 0.7;
-}
-
-#modalButton:visited {
-    border: none;
-}
 
 #countries {
     max-height: 50vh; 
     overflow-x: hidden; 
     overflow-y: scroll;
     z-index: 9999;
-    
 }
 
-.navbar {
-    height: 5vh;
+
+.navbar * {
     position: relative;
     z-index: 9999;
 }
 
-
 #mapid {
-    height: 95vh;
+    height: calc(100vh - 60px)
 }
 
 #element {
     overflow: auto;
-    z-index: 9999;
-    position: relative;
-    padding: 0;
 }
 
 #navbardropdown {
@@ -111,8 +81,4 @@
 
 #weatherCar .carousel-indicators {
     margin-bottom: 0;
-}
-
-#weatherCar .carousel-item {
-    margin-top: 2vh;
 }
