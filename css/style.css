@@ -95,7 +95,7 @@
 
 #element {
     overflow: auto;
-    z-index: 9995;
+    z-index: 9999;
     position: relative;
     padding: 0;
 }
