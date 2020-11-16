@@ -19,7 +19,12 @@ $(window).on('load', function () {
   accessToken: token,
   }).addTo(mymap);
   let menuCont = L.control.slideMenu().addTo(mymap);
- 
+  let modal = new L.Control.BootstrapModal({
+    modalId: 'mymodal',
+    tooltip: "Weather Forecast",
+    glyph: 'question-sign'
+}).addTo(mymap);
+
   //list countries in menu
   $.get('php/listCountries.php', data => {
     let countries = JSON.parse(data);
