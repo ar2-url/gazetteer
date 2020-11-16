@@ -9,7 +9,7 @@
     <meta name="generator" content="Jekyll v4.1.1">
     <title>Gazetteer</title>
     <link rel="icon" href="./images/globe.png">
-    <link rel="stylesheet" href="./css/style.css" type="text/css">
+    
     
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="./vendors/bootstrap/css/bootstrap.css">
@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="./vendors/fontawesome-free-5.15.1-web/css/fontawesome.css">
     <link rel="stylesheet" href="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.css">
     <link rel="stylesheet" href="./vendors/L.Control.BootstrapModal-master/leaflet-bootstrapmodal.css">
+    <link rel="stylesheet" href="./css/style.css" type="text/css">
   </head>
   <body>
     
@@ -41,7 +42,7 @@
     <main class="container-fluid">
       
       <div id="mapid" class="container-fluid">
-      
+
         <button type="button" id="modalButton" class="btn" data-toggle="modal" data-target="#mymodal"></button>
         <div id="mymodal" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -64,9 +65,10 @@
 
     <script src="./vendors/jquery/jquery-3.5.1.js"></script>
     <script src="./vendors/bootstrap/js/bootstrap.js"></script>
+    <script src="./vendors/L.Control.BootstrapModal-master/leaflet-bootstrapmodal.js"></script>
     <script src="./vendors/leaflet/leaflet.js"></script>
     <script src="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.js"></script>
-    <script src="./vendors/L.Control.BootstrapModal-master/leaflet-bootstrapmodal.js"></script>
+    
     <script src="./js/script.js"></script>
 </body>
 </html>
