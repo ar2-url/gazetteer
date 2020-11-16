@@ -42,7 +42,6 @@
     <main class="container-fluid">
       
       <div id="mapid" class="container-fluid">
-
         <button type="button" id="modalButton" class="btn" data-toggle="modal" data-target="#mymodal"></button>
         <div id="mymodal" class="modal fade" role="dialog">
             <div class="modal-dialog">
