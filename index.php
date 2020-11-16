@@ -65,8 +65,9 @@
 
     <script src="./vendors/jquery/jquery-3.5.1.js"></script>
     <script src="./vendors/bootstrap/js/bootstrap.js"></script>
-    <script src="./vendors/L.Control.BootstrapModal-master/leaflet-bootstrapmodal.js"></script>
+    
     <script src="./vendors/leaflet/leaflet.js"></script>
+    <script src="./vendors/L.Control.BootstrapModal-master/leaflet-bootstrapmodal.js"></script>
     <script src="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.js"></script>
     
     <script src="./js/script.js"></script>
