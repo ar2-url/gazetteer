@@ -19,7 +19,8 @@ $(window).on('load', function () {
   accessToken: token,
   }).addTo(mymap);
   let menuCont = L.control.slideMenu().addTo(mymap);
- 
+     
+
   //list countries in menu
   $.get('php/listCountries.php', data => {
     let countries = JSON.parse(data);
@@ -60,12 +61,7 @@ $(window).on('load', function () {
   }
   
   //get country specs
-  let cityIcon = L.icon({
-    iconUrl: './images/City by kareemov1000 from the Noun Project.png',
-    iconSize:     [28, 65],
-    iconAnchor:   [5, 54],
-    popupAnchor:  [-3, -76]
-})
+ 
   const getCountrySpec = (myCountry) => {
       $('.leaflet-interactive').remove();
       $.ajax({
@@ -76,11 +72,15 @@ $(window).on('load', function () {
           success: result => {
               let resultDec = JSON.parse(result)
               console.log(resultDec)
+              let newbutton = new L.easyButton('fa-globe', function() {
+              $('#mymodal').modal('show')
+                }).addTo(mymap)
+              $('#label').html(`<span>${resultDec['name']}</span>`)
               let border = L.geoJSON(resultDec['feature']).addTo(mymap)
               mymap.fitBounds(border.getBounds())
               if (resultDec['status'] == 200) {
                   for (let i = 0; i < resultDec['cities'].length; i++) {
-                     let marker = L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']], {icon: cityIcon}).addTo(mymap)
+                     let marker = L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']]).addTo(mymap)
                      marker.bindPopup(`<h5>${resultDec['cities'][i]['city']}</h5>`).bindTooltip(resultDec['cities'][i]['city'])
                   }
               }
