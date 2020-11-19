@@ -11,7 +11,7 @@ $(window).on('load', function () {
   let mymap = L.map('mapid').setView([50, 50], 3);
   const token = 'pk.eyJ1IjoiY3plc2xhdzE4NyIsImEiOiJja2Z4OGUzbXAwMmVrMndzMTd6ajgzd2RjIn0.OMQ-3vAZjK9CAisL9N15Sg';
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery Â© <a href="https://www.mapbox.com/">Mapbox</a>',
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
   maxZoom: 18,
   id: 'mapbox/streets-v11',
   tileSize: 512,
@@ -19,11 +19,20 @@ $(window).on('load', function () {
   accessToken: token,
   }).addTo(mymap);
   let menuCont = L.control.slideMenu().addTo(mymap);
-  let modal = new L.Control.BootstrapModal({
-    modalId: 'mymodal',
-    tooltip: "Weather Forecast",
-    glyph: 'question-sign'
-}).addTo(mymap);
+
+  let cityIcon = new L.ExtraMarkers.icon({
+    icon: 'fa-building-o',
+    markerColor: 'green',
+    shape: 'square',
+    prefix: 'fa'
+  })
+  
+  let capitalIcon = new L.ExtraMarkers.icon({
+    icon: 'fa-star',
+    markerColor: 'yellow',
+    shape: 'square',
+    prefix: 'fa'
+  })
 
   //list countries in menu
   $.get('php/listCountries.php', data => {
@@ -65,12 +74,7 @@ $(window).on('load', function () {
   }
   
   //get country specs
-  let cityIcon = L.icon({
-    iconUrl: './images/City by kareemov1000 from the Noun Project.png',
-    iconSize:     [28, 65],
-    iconAnchor:   [5, 54],
-    popupAnchor:  [-3, -76]
-})
+ 
   const getCountrySpec = (myCountry) => {
       $('.leaflet-interactive').remove();
       $.ajax({
@@ -81,12 +85,20 @@ $(window).on('load', function () {
           success: result => {
               let resultDec = JSON.parse(result)
               console.log(resultDec)
+              let newbutton = new L.easyButton('<img src="images/weather.png" style="width: 20px;"/>', function() {
+              $('#mymodal').modal('show')
+                }).addTo(mymap)
+              $('#label').html(`<span>${resultDec['name']}</span>`)
               let border = L.geoJSON(resultDec['feature']).addTo(mymap)
               mymap.fitBounds(border.getBounds())
+              let capital = L.marker([resultDec['capitalLat'], resultDec['capitalLon']], {icon: capitalIcon}).addTo(mymap)
+              capital.bindPopup(`<h5>${resultDec['capital']}</h5>`).bindTooltip(resultDec['capital'])
               if (resultDec['status'] == 200) {
                   for (let i = 0; i < resultDec['cities'].length; i++) {
-                     let marker = L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']], {icon: cityIcon}).addTo(mymap)
-                     marker.bindPopup(`<h5>${resultDec['cities'][i]['city']}</h5>`).bindTooltip(resultDec['cities'][i]['city'])
+                     if (resultDec['cities'][i]['city'] != resultDec['capital']) {
+                      let marker = L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']], {icon: cityIcon}).addTo(mymap)
+                      marker.bindPopup(`<h5>${resultDec['cities'][i]['city']}</h5>`).bindTooltip(resultDec['cities'][i]['city'])
+                     }
                   }
               }
               let photos = ''
@@ -137,7 +149,7 @@ $(window).on('load', function () {
               let weather = `
               <div class="carousel-item active h-50 w-70">
                 <p>${resultDec['weather'][0]['date']}</p>
-                <img src="https://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
+                <img src="http://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
                 <p>${resultDec['weather'][0]['description']}</p>
                 <p>Temp: ${resultDec['weather'][0]['temp']}<sup>o</sup>C</p>
                 <p>Feels like: ${resultDec['weather'][0]['feels']}<sup>o</sup>C</p>
@@ -148,7 +160,7 @@ $(window).on('load', function () {
               for (let i = 1; i < resultDec['weather'].length - 1; i++) {
                 weather += `<div class="carousel-item h-50 w-70">
                                 <p>${resultDec['weather'][i]['date']}</p>
-                                <img src="https://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
+                                <img src="http://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
                                 <p>${resultDec['weather'][i]['description']}</p>
                                 <p>Temp: ${resultDec['weather'][i]['temp']}<sup>o</sup>C</p>
                                 <p>Feels like: ${resultDec['weather'][i]['feels']}<sup>o</sup>C</p>

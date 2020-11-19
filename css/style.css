@@ -51,12 +51,6 @@
     z-index: 0;
 }
 
-
-
-#modalButton:visited {
-    border: none;
-}
-
 #countries {
     max-height: 50vh; 
     overflow-x: hidden; 
@@ -64,20 +58,26 @@
     z-index: 9999;
 }
 
-
 .navbar * {
     position: relative;
     z-index: 9999;
 }
 
 #mapid {
-    height: calc(100vh - 60px)
+    height: calc(100vh - 60px);
 }
 
 #element {
     overflow: auto;
-    position: relative;
-    z-index: 9999;
+}
+
+#element.modal-body * {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 0.2vh;
+    padding: 5px 5px;
+    text-align: center;
 }
 
 #navbardropdown {
@@ -87,4 +87,8 @@
 
 #weatherCar .carousel-indicators {
     margin-bottom: 0;
+}
+
+main.container-fluid {
+   padding: 0;
 }
