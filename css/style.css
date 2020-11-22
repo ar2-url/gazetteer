@@ -71,13 +71,16 @@
     overflow: auto;
 }
 
-#element.modal-body * {
+#element.modal-body p {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 14px;
-    font-weight: bold;
     line-height: 0.2vh;
     padding: 5px 5px;
     text-align: center;
+}
+
+#element.modal-body h5 {
+    font-weight: bold;
 }
 
 #navbardropdown {
@@ -91,4 +94,38 @@
 
 main.container-fluid {
    padding: 0;
+}
+
+.leaflet-popup-content-wrapper {
+    max-width: 30vw;
+    max-height: 30vh;
+    overflow: auto;
+}
+
+.leaflet-popup-content-wrapper::-webkit-scrollbar-track
+{
+box-shadow: inset 0 0 6px rgba(0,0,0,0.6);   
+-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
+background-color: #CCCCCC;
+}
+
+.leaflet-popup-content-wrapper::-webkit-scrollbar
+{
+width: 10px;
+background-color: #F5F5F5;
+}
+
+.leaflet-popup-content-wrapper::-webkit-scrollbar-thumb
+{
+background-color: #FFF;
+background-image: -webkit-linear-gradient(90deg,
+                                          rgba(0, 0, 0, 1) 0%,
+  rgba(0, 0, 0, 1) 25%,
+  transparent 100%,
+  rgba(0, 0, 0, 1) 75%,
+  transparent)
+}
+
+.col-8 {
+    text-align: justify;
 }

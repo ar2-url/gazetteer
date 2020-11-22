@@ -123,6 +123,7 @@ for ($i = 0; $i < count($decoded); $i++) {
     $outcome['cities'][$j]['city'] = $decoded[$i]['city_ascii'];
     $outcome['cities'][$j]['lat'] = $decoded[$i]['lat'];
     $outcome['cities'][$j]['lng'] = $decoded[$i]['lng'];
+    $outcome['cities'][$j]['population'] = $decoded[$i]['population'];
     $j++;
   } elseif (!$countryName) {
     $outcome['cities'] = 'No data';

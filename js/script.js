@@ -11,7 +11,7 @@ $(window).on('load', function () {
   let mymap = L.map('mapid').setView([50, 50], 3);
   const token = 'pk.eyJ1IjoiY3plc2xhdzE4NyIsImEiOiJja2Z4OGUzbXAwMmVrMndzMTd6ajgzd2RjIn0.OMQ-3vAZjK9CAisL9N15Sg';
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery ï¿½ <a href="https://www.mapbox.com/">Mapbox</a>',
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
   maxZoom: 18,
   id: 'mapbox/streets-v11',
   tileSize: 512,
@@ -33,6 +33,11 @@ $(window).on('load', function () {
     shape: 'square',
     prefix: 'fa'
   })
+
+  let weatherControl = new L.control.weather({
+    lang: "es",
+    units: "metric"
+  }).addTo(mymap); 
 
   //list countries in menu
   $.get('php/listCountries.php', data => {
@@ -91,13 +96,41 @@ $(window).on('load', function () {
               $('#label').html(`<span>${resultDec['name']}</span>`)
               let border = L.geoJSON(resultDec['feature']).addTo(mymap)
               mymap.fitBounds(border.getBounds())
-              let capital = L.marker([resultDec['capitalLat'], resultDec['capitalLon']], {icon: capitalIcon}).addTo(mymap)
-              capital.bindPopup(`<h5>${resultDec['capital']}</h5>`).bindTooltip(resultDec['capital'])
+             
               if (resultDec['status'] == 200) {
+
                   for (let i = 0; i < resultDec['cities'].length; i++) {
+
                      if (resultDec['cities'][i]['city'] != resultDec['capital']) {
                       let marker = L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']], {icon: cityIcon}).addTo(mymap)
-                      marker.bindPopup(`<h5>${resultDec['cities'][i]['city']}</h5>`).bindTooltip(resultDec['cities'][i]['city'])
+                      marker.bindPopup('loading...').bindTooltip(resultDec['cities'][i]['city'])
+                      marker.on('click', function(e) {
+                        let popup = e.target.getPopup()
+                        let url = `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extracts&exsentences=10&exlimit=1&titles=${resultDec['cities'][i]['city']}&explaintext=1&formatversion=2`
+                        $.ajax({
+                          url: url,
+                          dataType: 'json',
+                          success: data => {
+                            popup.setContent(`<h5>${resultDec['cities'][i]['city']}</h5><p>Population: ${resultDec['cities'][i]['population']}</p><p>${data['query']['pages'][0]['extract']}<p>`)
+                            popup.update()
+                          }
+                        })
+                      })
+                     } else {
+                      let capital = L.marker([resultDec['capitalLat'], resultDec['capitalLon']], {icon: capitalIcon}).addTo(mymap)
+                      capital.bindPopup('loading...').bindTooltip(resultDec['capital'])
+                      capital.on('click', function(e) {
+                        let popup = e.target.getPopup()
+                        let url = `https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&prop=extracts&exsentences=10&exlimit=1&titles=${resultDec['capital']}&explaintext=1&formatversion=2`
+                        $.ajax({
+                          url: url,
+                          dataTpe: 'json',
+                          success: capital => {
+                            popup.setContent(`<h5>${resultDec['capital']}</h5><p>Population: ${resultDec['cities'][i]['population']}</p><p>${capital['query']['pages'][0]['extract']}</p>`)
+                            popup.update()
+                          }
+                        })
+                      })
                      }
                   }
               }
@@ -148,24 +181,36 @@ $(window).on('load', function () {
 
               let weather = `
               <div class="carousel-item active h-50 w-70">
-                <p>${resultDec['weather'][0]['date']}</p>
-                <img src="https://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
-                <p>${resultDec['weather'][0]['description']}</p>
-                <p>Temp: ${resultDec['weather'][0]['temp']}<sup>o</sup>C</p>
-                <p>Feels like: ${resultDec['weather'][0]['feels']}<sup>o</sup>C</p>
-                <p>Pressure: ${resultDec['weather'][0]['pressure']} hPa</p>
-                <p>Rain: ${resultDec['weather'][0]['rain']} mm</p>
+              <h5>${resultDec['weather'][0]['date']}</h5><br>
+                <div class="row">
+                  <div class="col-4" style="text-align: center;">
+                    <img src="http://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
+                  </div>
+                  <div class="col-8">
+                    <p>${resultDec['weather'][0]['description']}</p>
+                    <p>Temp: ${resultDec['weather'][0]['temp']}<sup>o</sup>C</p>
+                    <p>Feels like: ${resultDec['weather'][0]['feels']}<sup>o</sup>C</p>
+                    <p>Pressure: ${resultDec['weather'][0]['pressure']} hPa</p>
+                    <p>Rain: ${resultDec['weather'][0]['rain']} mm</p>
+                  </div>
+                </div>
               </div>`
               
               for (let i = 1; i < resultDec['weather'].length - 1; i++) {
                 weather += `<div class="carousel-item h-50 w-70">
-                                <p>${resultDec['weather'][i]['date']}</p>
-                                <img src="https://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
-                                <p>${resultDec['weather'][i]['description']}</p>
-                                <p>Temp: ${resultDec['weather'][i]['temp']}<sup>o</sup>C</p>
-                                <p>Feels like: ${resultDec['weather'][i]['feels']}<sup>o</sup>C</p>
-                                <p>Pressure: ${resultDec['weather'][i]['pressure']} hPa</p>
-                                <p>Rain: ${resultDec['weather'][i]['rain']} mm</p>
+                              <h5>${resultDec['weather'][i]['date']}</h5><br>
+                              <div class="row">
+                                <div class="col-4" style="text-align: center;">
+                                  <img src="http://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
+                                </div>
+                                <div class="col-8">
+                                  <p>${resultDec['weather'][i]['description']}</p>
+                                  <p>Temp: ${resultDec['weather'][i]['temp']}<sup>o</sup>C</p>
+                                  <p>Feels like: ${resultDec['weather'][i]['feels']}<sup>o</sup>C</p>
+                                  <p>Pressure: ${resultDec['weather'][i]['pressure']} hPa</p>
+                                  <p>Rain: ${resultDec['weather'][i]['rain']} mm</p>
+                                </div>
+                              </div>
                             </div>`
               }
 

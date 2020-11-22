@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.css" type="text/css">
     <link rel="stylesheet" href="./vendors/Leaflet.EasyButton-master/src/easy-button.css" type="text/css">
     <link rel="stylesheet" href="./vendors/Leaflet.ExtraMarkers-master/Leaflet.ExtraMarkers-master/dist/css/leaflet.extra-markers.min.css">
+    <link rel="stylesheet" href="./vendors/Leaflet.Weather-master/Leaflet.Weather.css" type="text/css">
     <link rel="stylesheet" href="./css/style.css" type="text/css">
   </head>
   <body>
@@ -68,8 +69,10 @@
     <script src="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.js"></script>
     <script src="./vendors/Leaflet.EasyButton-master/src/easy-button.js"></script>
     <script src="./vendors/Leaflet.ExtraMarkers-master/Leaflet.ExtraMarkers-master/dist/js/leaflet.extra-markers.js"></script>
+    <script src="./vendors/Leaflet.Weather-master/Leaflet.Weather.js"></script>
     <script src="./js/script.js"></script>
 </body>
 </html>
+
 
 
