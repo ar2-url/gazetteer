@@ -35,7 +35,7 @@ L.Control.Weather = L.Control.extend({
   refresh: function(callback) {
     var _this = this,
       center = this._map.getCenter(),
-      url = "http://api.openweathermap.org/data/2.5/weather?lat=:lat&lon=:lng&lang=:lang&units=:units&appid=ad6e24a64254b73ff9e9cc4c08e43823";
+      url = "https://api.openweathermap.org/data/2.5/weather?lat=:lat&lon=:lng&lang=:lang&units=:units&appid=ad6e24a64254b73ff9e9cc4c08e43823";
     url = url.replace(":lang", this.options.lang);
     url = url.replace(":units", this.options.units);
     url = url.replace(":lat", center.lat);
