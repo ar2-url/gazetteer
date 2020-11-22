@@ -5,7 +5,7 @@ L.Control.Weather = L.Control.extend({
     lang: "en",
     event: "moveend",
     cssClass: "leaflet-control-weather",
-    iconUrlTemplate: "http://openweathermap.org/img/w/:icon",
+    iconUrlTemplate: "https://openweathermap.org/img/w/:icon",
     template: '<div class="weatherIcon"><img src=":iconurl"></div><div>T: :temperature°C</div><div>H: :humidity%</div><div>W: :winddirection :windspeed m/s</div>',
     translateWindDirection: function(text) {
       return text;
