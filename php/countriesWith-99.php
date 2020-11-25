@@ -24,12 +24,12 @@ foreach ($decoded['features'] as $feature) {
 
 $outcome['feature'] = $info;
 
-// get lat and lon
+// get lat and lon of country
 
 $token = '5aa3fa0354022f';
 $url = 'https://eu1.locationiq.com/v1/search.php?key=' . $token . '&q=' . $_REQUEST['countryName'] . '&format=json';
 
-$ch = curl_init();
+$ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
@@ -85,7 +85,32 @@ if ($httpCode != 200) {
     $outcome['curr_Symbol'] = $data[0]['currencies'][0]['symbol'];
     $outcome['flag'] = $data[0]['flag'];
     $outcome['name'] = $countryName;
-   
+
+// get lat n lon of capital
+
+$token = '5aa3fa0354022f';
+$url = 'https://eu1.locationiq.com/v1/search.php?key=' . $token . '&q=' . $outcome['capital'] . '&format=json';
+
+$ch = curl_init($url);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_URL, $url);
+
+$result = curl_exec($ch);
+
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+curl_close($ch);
+
+if ($httpCode != 200) {
+  $outcome['capital']['lat'] = 'No data';
+} else {
+  $decoded = json_decode($result, true);
+  $outcome['capitalLat'] = $decoded[0]['lat'];
+  $outcome['capitalLon'] = $decoded[0]['lon'];
+}
+
 // get country cities 
 
 $content = file_get_contents('../vendors/world-cities_zip/world_cities.json');
@@ -98,6 +123,7 @@ for ($i = 0; $i < count($decoded); $i++) {
     $outcome['cities'][$j]['city'] = $decoded[$i]['city_ascii'];
     $outcome['cities'][$j]['lat'] = $decoded[$i]['lat'];
     $outcome['cities'][$j]['lng'] = $decoded[$i]['lng'];
+    $outcome['cities'][$j]['population'] = $decoded[$i]['population'];
     $j++;
   } elseif (!$countryName) {
     $outcome['cities'] = 'No data';
