@@ -65,6 +65,8 @@
 
 #mapid {
     height: calc(100vh - 60px);
+    text-align: center;
+    margin: 0 auto;
 }
 
 #element {
@@ -98,8 +100,21 @@ main.container-fluid {
 
 .leaflet-popup-content-wrapper {
     max-width: 30vw;
+    min-width: 10vw;
     max-height: 30vh;
+    min-height: 10vh;
     overflow: auto;
+}
+
+.leaflet-popup-content-wrapper > p {
+    top: 30px;
+}
+
+#popHeader {
+    color: #F5F5F5;
+    height: 5vh;
+    margin: 0;
+    padding: 0;
 }
 
 .leaflet-popup-content-wrapper::-webkit-scrollbar-track
@@ -111,8 +126,8 @@ background-color: #CCCCCC;
 
 .leaflet-popup-content-wrapper::-webkit-scrollbar
 {
-width: 10px;
-background-color: #F5F5F5;
+    width: 0;
+background: transparent;
 }
 
 .leaflet-popup-content-wrapper::-webkit-scrollbar-thumb
@@ -128,4 +143,8 @@ background-image: -webkit-linear-gradient(90deg,
 
 .col-8 {
     text-align: justify;
+}
+
+.leaflet-popup-close-button {
+    right: 5px !important;
 }
