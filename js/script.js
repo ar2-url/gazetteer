@@ -11,7 +11,7 @@ $(window).on('load', function () {
   let mymap = L.map('mapid').setView([50, 50], 3);
   const token = 'pk.eyJ1IjoiY3plc2xhdzE4NyIsImEiOiJja2Z4OGUzbXAwMmVrMndzMTd6ajgzd2RjIn0.OMQ-3vAZjK9CAisL9N15Sg';
   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+  attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="https://www.mapbox.com/">Mapbox</a>',
   maxZoom: 18,
   id: 'mapbox/streets-v11',
   tileSize: 512,
@@ -97,6 +97,7 @@ $(window).on('load', function () {
               $('#label').html(`<span>${resultDec['name']}</span>`)
               let border = L.geoJSON(resultDec['feature']).addTo(mymap)
               mymap.fitBounds(border.getBounds())
+             
               if (resultDec['status'] == 200) {
                
                for (let i = 0; i < resultDec['cities'].length; i++) {
@@ -184,7 +185,7 @@ $(window).on('load', function () {
               <h5>${resultDec['weather'][0]['date']}</h5><br>
                 <div class="row">
                   <div class="col-4" style="text-align: center;">
-                    <img src="http://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
+                    <img src="https://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
                   </div>
                   <div class="col-8">
                     <p>${resultDec['weather'][0]['description']}</p>
@@ -201,7 +202,7 @@ $(window).on('load', function () {
                               <h5>${resultDec['weather'][i]['date']}</h5><br>
                               <div class="row">
                                 <div class="col-4" style="text-align: center;">
-                                  <img src="http://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
+                                  <img src="https://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
                                 </div>
                                 <div class="col-8">
                                   <p>${resultDec['weather'][i]['description']}</p>
