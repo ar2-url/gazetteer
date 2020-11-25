@@ -98,9 +98,7 @@ $(window).on('load', function () {
               let border = L.geoJSON(resultDec['feature']).addTo(mymap)
               mymap.fitBounds(border.getBounds())
               if (resultDec['status'] == 200) {
-                if (!mymap.hasLayer(marker)) {
-                  mymap.removeLayer(marker);
-               }
+               
                for (let i = 0; i < resultDec['cities'].length; i++) {
                      if (resultDec['cities'][i]['city'] != resultDec['capital']) {
                      let marker = L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']], {icon: cityIcon}).addTo(mymap)
