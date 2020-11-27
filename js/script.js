@@ -144,7 +144,7 @@ $(window).on('load', function () {
                           </div>`
                   }
               }
-              //************************************
+              // sliding menu content
               menuCont.setContents(`
               <div class="card text-center w-90 mr-5">
                   <img class="card-img-top" src="${resultDec['flag']}" alt="Card image">
@@ -179,66 +179,36 @@ $(window).on('load', function () {
               </a>
               </div>
               `) 
-
-              let weather = `
-              <div class="carousel-item active h-50 w-70">
-              <h5>${resultDec['weather'][0]['date']}</h5><br>
-                <div class="row">
-                  <div class="col-4" style="text-align: center;">
-                    <img src="https://openweathermap.org/img/wn/${resultDec['weather'][0]['icon']}@2x.png" />
-                  </div>
-                  <div class="col-8">
-                    <p>${resultDec['weather'][0]['description']}</p>
-                    <p>Temp: ${resultDec['weather'][0]['temp']}<sup>o</sup>C</p>
-                    <p>Feels like: ${resultDec['weather'][0]['feels']}<sup>o</sup>C</p>
-                    <p>Pressure: ${resultDec['weather'][0]['pressure']} hPa</p>
-                    <p>Rain: ${resultDec['weather'][0]['rain']} mm</p>
-                  </div>
-                </div>
-              </div>`
+              // weather modal content
+              let weather = '';
               
-              for (let i = 1; i < resultDec['weather'].length - 1; i++) {
-                weather += `<div class="carousel-item h-50 w-70">
-                              <h5>${resultDec['weather'][i]['date']}</h5><br>
-                              <div class="row">
-                                <div class="col-4" style="text-align: center;">
-                                  <img src="https://openweathermap.org/img/wn/${resultDec['weather'][i]['icon']}@2x.png" />
-                                </div>
-                                <div class="col-8">
-                                  <p>${resultDec['weather'][i]['description']}</p>
-                                  <p>Temp: ${resultDec['weather'][i]['temp']}<sup>o</sup>C</p>
-                                  <p>Feels like: ${resultDec['weather'][i]['feels']}<sup>o</sup>C</p>
-                                  <p>Pressure: ${resultDec['weather'][i]['pressure']} hPa</p>
-                                  <p>Rain: ${resultDec['weather'][i]['rain']} mm</p>
-                                </div>
-                              </div>
+              for (let i = 0; i < resultDec['weather']['forecast'].length; i++) {
+                weather += `<div id="weatherDescription">
+                            <img src="https://openweathermap.org/img/wn/${resultDec['weather']['forecast'][i]['icon']}@2x.png" /><br>
+                            <span>${resultDec['weather']['forecast'][i]['description']}</span><br>
+                            <span>${resultDec['weather']['forecast'][i]['hour']}</span>
                             </div>`
               }
 
-              let control = `<li data-target="#weatherCar" data-slide-to="0" class="active" style="margin: 0; padding: 0;"></li>`
-              for (let i = 1; i < resultDec['weather'].length - 1; i++) {
-                control += `<li data-target="#weatherCar" data-slide-to="${i}" style="margin: 0; padding: 0;"></li>`
-              }
-//*************************************** */
-              $('#element').html(`
-              <div id="weatherCar" class="carousel slide bg-dark text-light" data-ride="carousel">
+              $('#mymodal').append(`
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div id="modal-header" class="modal-header bg-secondary text-white">
+                      <div>
+                        <h4>${resultDec['weather']['day']}</h4>
+                        <p>${resultDec['weather']['date']}</p>
+                        <span>Temp: ${resultDec['weather']['temp']}<sup>o</sup>C</span>
+                        <span>Feels like: ${resultDec['weather']['feels_like']}<sup>o</sup>C</span>
+                      </div>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div id="element" class="modal-body bg-secondary text-white w-70">`
+                    
+                    + weather +
 
-              <ol class="carousel-indicators">`
-                 + control +
-              `</ol>
-              
-              <div class="carousel-inner text-center">`
-                 + weather +
-              `</div>
-              <a class="carousel-control-prev" href="#weatherCar" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-              </a>
-              <a class="carousel-control-next" href="#weatherCar" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-              </a>
-              </div>
+                    `</div>
+                  </div>
+               </div>
               `)
           }
       })

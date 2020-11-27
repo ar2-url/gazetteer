@@ -70,7 +70,17 @@
 }
 
 #element {
-    overflow: auto;
+    overflow-x: auto;
+    display: flex;
+    flex: row nowrap;
+}
+
+#element > div {
+    width: auto;
+}
+
+#element span {
+    color: white;
 }
 
 #element.modal-body p {
@@ -99,10 +109,10 @@ main.container-fluid {
 }
 
 .leaflet-popup-content-wrapper {
-    max-width: 30vw;
-    min-width: 10vw;
-    max-height: 30vh;
-    min-height: 10vh;
+    max-width: 40vw;
+    min-width: 20vw;
+    max-height: 40vh;
+    min-height: 20vh;
     overflow: auto;
 }
 
@@ -134,7 +144,7 @@ background: transparent;
 {
 background-color: #FFF;
 background-image: -webkit-linear-gradient(90deg,
-                                          rgba(0, 0, 0, 1) 0%,
+  rgba(0, 0, 0, 1) 0%,
   rgba(0, 0, 0, 1) 25%,
   transparent 100%,
   rgba(0, 0, 0, 1) 75%,
@@ -147,4 +157,41 @@ background-image: -webkit-linear-gradient(90deg,
 
 .leaflet-popup-close-button {
     right: 5px !important;
+}
+
+.card {
+    width: 100%;
+}
+
+.card-img-top {
+    border: 1px solid #000;
+}
+
+#weatherDescription {
+    transition: all 0.5s ease;
+    margin: 10px;
+    box-shadow: 1px 1px 1px 1px black;
+}
+
+#weatherDescription:hover {
+    transform: scale(1.2);
+}
+
+#element::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    width: 3px;
+    height: 3px;
+}
+
+#element::-webkit-scrollbar
+{
+	width: 3px;
+	background-color: #F5F5F5;
+}
+
+#element::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
 }

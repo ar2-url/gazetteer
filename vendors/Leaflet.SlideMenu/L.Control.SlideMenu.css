@@ -8,6 +8,7 @@
     overflow: auto;
     cursor: default;
     z-index: 9999;
+    margin: 0 auto;
 }
 
 .leaflet-menu::-webkit-scrollbar{
@@ -31,4 +32,8 @@
 
 .leaflet-menu-close-button:hover{
     color: #4285F4;
+}
+
+.leaflet-menu-contents {
+    width: 100%;
 }
