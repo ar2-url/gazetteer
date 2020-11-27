@@ -45,18 +45,7 @@
       <div id="mapid" class="container-fluid">
         <button type="button" id="modalButton" class="btn" data-toggle="modal" data-target="#mymodal"></button>
         <div id="mymodal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div id="element" class="modal-body">
-
-                      
-
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
+            
         </div>
       </div>
     </main>
@@ -73,6 +62,8 @@
     <script src="./js/script.js"></script>
 </body>
 </html>
+
+
 
 
 

@@ -160,7 +160,7 @@ foreach ($data['rates'] as $currency => $value) {
 // get 5 day weather forecast
 
 $key = 'ad6e24a64254b73ff9e9cc4c08e43823';
-$url ='https://api.openweathermap.org/data/2.5/forecast?q=' . $outcome['capital'] . '&appid=' . $key;
+$url ='https://api.openweathermap.org/data/2.5/onecall?lat=' . $outcome['latlng']['lat'] . '&lon=' . $outcome['latlng']['lon'] . '&appid=' . $key;
 
 $ch = curl_init($url);
 
@@ -176,22 +176,20 @@ $err = curl_error($ch);
 curl_close($ch);
 $decoded = json_decode($result, true);
 
-if (isset($decoded['list'])) {
-  for ($i = 0; $i < count($decoded['list']); $i++) {
-    $outcome['weather'][$i]['date'] = $decoded['list'][$i]['dt_txt'];
-    $outcome['weather'][$i]['temp'] = round($decoded['list'][$i]['main']['temp'] - 273);
-    $outcome['weather'][$i]['feels'] = round($decoded['list'][$i]['main']['feels_like'] - 273);
-    $outcome['weather'][$i]['pressure'] = $decoded['list'][$i]['main']['pressure'];
-    $outcome['weather'][$i]['description'] = $decoded['list'][$i]['weather'][0]['description'];
-    $outcome['weather'][$i]['icon'] = $decoded['list'][$i]['weather'][0]['icon'];
-if (isset($decoded['list'][$i]['rain'])) {
-    $outcome['weather'][$i]['rain'] = $decoded['list'][$i]['rain']['3h'];
+if ($httpCode == 200) {
+	$outcome['weather']['day'] = date('l', $decoded['current']['dt']);
+	$outcome['weather']['date'] = date('d-m', $decoded['current']['dt']);
+	$outcome['weather']['temp'] = round($decoded['current']['temp'] - 273);
+	$outcome['weather']['feels_like'] = round($decoded['current']['feels_like'] - 273);
+	$outcome['weather']['sunrise'] = date('H:i', $decoded['current']['sunrise']);
+	$outcome['weather']['sunset'] = date('H:i', $decoded['current']['sunset']);
+	for ($i = 0; $i < count($decoded['hourly']); $i++ ) {
+		$outcome['weather']['forecast'][$i]['hour'] = date('H:i', $decoded['hourly'][$i]['dt']);
+		$outcome['weather']['forecast'][$i]['description'] = $decoded['hourly'][$i]['weather'][0]['description'];
+		$outcome['weather']['forecast'][$i]['icon'] = $decoded['hourly'][$i]['weather'][0]['icon'];
+	}
 } else {
-    $outcome['weather'][$i]['rain'] = 0;
-}   
-}
-} else {
-  $outcome['list'] = 'No data';
+	$outcome['weather'] = 'No data';
 }
 // **************************************
 // get wiki paragraph
