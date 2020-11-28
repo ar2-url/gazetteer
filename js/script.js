@@ -89,6 +89,7 @@ $(window).on('load', function () {
  let layerGroup = L.layerGroup()
  let capital = {}
   const getCountrySpec = (myCountry) => {
+     $(".leaflet-popup").remove(); 
       $.ajax({
           url: 'php/countriesWith-99.php',
           type: 'POST',
@@ -102,9 +103,6 @@ $(window).on('load', function () {
               layerGroup.clearLayers()
               if (border) {
                 mymap.removeLayer(border)
-              }
-              if (marker) {
-                mymap.removeLayer(marker) 
               }
               border = L.geoJSON(resultDec['feature']).addTo(mymap)
               mymap.fitBounds(border.getBounds())
@@ -206,13 +204,18 @@ $(window).on('load', function () {
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div id="modal-header" class="modal-header bg-secondary text-white">
-                      <div>
+                      <div class="col-4">
                         <h4>${resultDec['weather']['day']}</h4>
                         <p>${resultDec['weather']['date']}</p>
-                        <span>Temp: ${resultDec['weather']['temp']}<sup>o</sup>C</span>
-                        <span>Feels like: ${resultDec['weather']['feels_like']}<sup>o</sup>C</span>
-                      </div>
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>  
+                      <div class="col-8">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <span><strong>Temp:</strong> ${resultDec['weather']['temp']}<sup>o</sup>C</span>
+                        <span><strong>Feels like:</strong> ${resultDec['weather']['feels_like']}<sup>o</sup>C</span><br><br>
+                        <span><strong>Sunrise:</strong> ${resultDec['weather']['sunrise']}</span>
+                        <span><strong>Sunset:</strong> ${resultDec['weather']['sunset']}</span>
+                        
+                      </div>  
                     </div>
                     <div id="element" class="modal-body bg-secondary text-white w-70">`
                     

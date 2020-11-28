@@ -171,6 +171,7 @@ background-image: -webkit-linear-gradient(90deg,
     transition: all 0.5s ease;
     margin: 10px;
     box-shadow: 1px 1px 1px 1px black;
+    border-radius: 5px;
 }
 
 #weatherDescription:hover {
@@ -194,4 +195,8 @@ background-image: -webkit-linear-gradient(90deg,
 #element::-webkit-scrollbar-thumb
 {
 	background-color: #000000;
+}
+
+#mymodal {
+    border-radius: 5px;
 }
