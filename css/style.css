@@ -122,9 +122,9 @@ main.container-fluid {
 
 #popHeader {
     color: #F5F5F5;
-    height: 5vh;
+    height: 6vh;
     margin: 0;
-    padding: 0;
+    padding: 1vh;
 }
 
 .leaflet-popup-content-wrapper::-webkit-scrollbar-track
