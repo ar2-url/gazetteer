@@ -118,7 +118,7 @@ $(window).on('load', function () {
                           url: url,
                           dataType: 'json',
                           success: data => {
-                            popup.setContent(`<h5 id="popHeader" class="container sticky-top bg-dark font-weight-bold text-center">${resultDec['cities'][i]['city']}</h5><p>Population: ${resultDec['cities'][i]['population']}</p><p>${data['query']['pages'][0]['extract']}<p>`)
+                            popup.setContent(`<div id="popHeader" class="container sticky-top bg-dark font-weight-bold text-center"><h5>${resultDec['cities'][i]['city']}</h5></div><p>Population: ${resultDec['cities'][i]['population']}</p><p>${data['query']['pages'][0]['extract']}<p>`)
                             popup.update()
                           }
                         })
@@ -134,7 +134,7 @@ $(window).on('load', function () {
                           url: url,
                           dataTpe: 'json',
                           success: capital => {
-                            popup.setContent(`<h5 id="popHeader" class="container sticky-top bg-dark font-weight-bold text-center">${resultDec['capital']}</h5><p>Population: ${resultDec['cities'][i]['population']}</p><p>${capital['query']['pages'][0]['extract']}</p>`)
+                            popup.setContent(`<div id="popHeader" class="container sticky-top bg-dark font-weight-bold text-center"><h5>${resultDec['capital']}</h5></div><p>Population: ${resultDec['cities'][i]['population']}</p><p>${capital['query']['pages'][0]['extract']}</p>`)
                             popup.update()
                           }
                         })
