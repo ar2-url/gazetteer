@@ -178,7 +178,7 @@ $decoded = json_decode($result, true);
 
 if ($httpCode == 200) {
 	$outcome['weather']['day'] = date('l', $decoded['current']['dt']);
-	$outcome['weather']['date'] = date('d-m', $decoded['current']['dt']);
+	$outcome['weather']['date'] = date('d F', $decoded['current']['dt']);
 	$outcome['weather']['temp'] = round($decoded['current']['temp'] - 273);
 	$outcome['weather']['feels_like'] = round($decoded['current']['feels_like'] - 273);
 	$outcome['weather']['sunrise'] = date('H:i', $decoded['current']['sunrise']);
