@@ -31,6 +31,6 @@
 @media only screen and (max-width: 768px) {
   .leaflet-control-weather {
     position: absolute;
-    bottom: 5vh;
+    bottom: 6vh;
   }
 }
