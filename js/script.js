@@ -19,6 +19,9 @@ $(window).on('load', function () {
   accessToken: token,
   }).addTo(mymap);
   let menuCont = L.control.slideMenu().addTo(mymap);
+  let newbutton = L.easyButton(`<img src="images/weather.png" style="width: 20px;"/>`, function(btn, map) {
+    $('#mymodal').modal('show')
+    }).addTo(mymap)
 
   let cityIcon = new L.ExtraMarkers.icon({
     icon: 'fa-building-o',
@@ -80,9 +83,12 @@ $(window).on('load', function () {
   }
   
   //get country specs
- 
+  
+ let marker = {}
+ let border = {}
+ let layerGroup = L.layerGroup()
+ let capital = {}
   const getCountrySpec = (myCountry) => {
-      $('.leaflet-interactive').remove();
       $.ajax({
           url: 'php/countriesWith-99.php',
           type: 'POST',
@@ -91,18 +97,21 @@ $(window).on('load', function () {
           success: result => {
               let resultDec = JSON.parse(result)
               console.log(resultDec)
-              let newbutton = new L.easyButton('<img src="images/weather.png" style="width: 20px;"/>', function() {
-              $('#mymodal').modal('show')
-                }).addTo(mymap)
+              
               $('#label').html(`<span>${resultDec['name']}</span>`)
-              let border = L.geoJSON(resultDec['feature']).addTo(mymap)
+              layerGroup.clearLayers()
+              if (border) {
+                mymap.removeLayer(border)
+              }
+              if (marker) {
+                mymap.removeLayer(marker) 
+              }
+              border = L.geoJSON(resultDec['feature']).addTo(mymap)
               mymap.fitBounds(border.getBounds())
-             
               if (resultDec['status'] == 200) {
-               
                for (let i = 0; i < resultDec['cities'].length; i++) {
-                     if (resultDec['cities'][i]['city'] != resultDec['capital']) {
-                     let marker = L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']], {icon: cityIcon}).addTo(mymap)
+                     if (resultDec['cities'][i]['city'] != resultDec['capital']) {  
+                     marker = new L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']], {icon: cityIcon})
                       marker.bindPopup('loading...').bindTooltip(resultDec['cities'][i]['city'])
                       marker.on('click', function(e) {
                         let popup = e.target.getPopup()
@@ -116,8 +125,9 @@ $(window).on('load', function () {
                           }
                         })
                       })
+                      layerGroup.addLayer(marker)
                      } else {
-                      let capital = L.marker([resultDec['capitalLat'], resultDec['capitalLon']], {icon: capitalIcon}).addTo(mymap)
+                      capital = L.marker([resultDec['capitalLat'], resultDec['capitalLon']], {icon: capitalIcon}).addTo(mymap)
                       capital.bindPopup('loading...').bindTooltip(resultDec['capital'])
                       capital.on('click', function(e) {
                         let popup = e.target.getPopup()
@@ -131,8 +141,10 @@ $(window).on('load', function () {
                           }
                         })
                       })
+                      layerGroup.addLayer(capital)
                      }
                   }
+                  layerGroup.addTo(mymap)
               }   
                     
               let photos = ''
@@ -190,7 +202,7 @@ $(window).on('load', function () {
                             </div>`
               }
 
-              $('#mymodal').append(`
+              $('#mymodal').html(`
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div id="modal-header" class="modal-header bg-secondary text-white">
