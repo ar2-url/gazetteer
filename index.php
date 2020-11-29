@@ -54,6 +54,8 @@
     <script src="./vendors/jquery/jquery-3.5.1.js"></script>
     <script src="./vendors/bootstrap/js/bootstrap.js"></script>
     <script src="./vendors/leaflet/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet"></script>
+    <script src="https://unpkg.com/@joergdietrich/leaflet.terminator"></script>
     <script src="./vendors/Leaflet.SlideMenu/L.Control.SlideMenu.js"></script>
     <script src="./vendors/Leaflet.EasyButton-master/src/easy-button.js"></script>
     <script src="./vendors/Leaflet.ExtraMarkers-master/Leaflet.ExtraMarkers-master/dist/js/leaflet.extra-markers.js"></script>
@@ -61,9 +63,6 @@
     <script src="./js/script.js"></script>
 </body>
 </html>
-
-
-
 
 
 
