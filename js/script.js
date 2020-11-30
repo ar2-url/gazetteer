@@ -25,8 +25,7 @@ $(window).on('load', function () {
 
   let night = L.terminator()
   let dayLayer = {
-    'map': basic,
-    'satelite': satMap
+    'map': basic
   }
   let nightLayer = {
     'night': night
