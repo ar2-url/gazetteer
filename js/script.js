@@ -23,14 +23,6 @@ $(window).on('load', function () {
     $('#mymodal').modal('show')
     }).addTo(mymap)
 
-    mapboxgl.accessToken = token;
-    let satMap = new mapboxgl.Map({
-    container: 'mapid',
-    zoom: 9,
-    center: [137.9150899566626, 36.25956997955441],
-    style: 'mapbox://styles/mapbox/satellite-v9'
-    });
-
   let night = L.terminator()
   let dayLayer = {
     'map': basic,
