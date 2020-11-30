@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 // get feature
 
-$content = file_get_contents('../vendors/countries/countries_small.geo.json');
+$content = file_get_contents('../vendors/countries/countries_large.geo.json');
 
 $decoded = json_decode($content, true);
 
@@ -14,7 +14,7 @@ $info = '';
 $countryName = $_REQUEST['countryName'];
 
 foreach ($decoded['features'] as $feature) {
-    if ($feature['properties']['name'] == $countryName) {
+    if ($feature['properties']['ADMIN'] == $countryName) {
         $info = $feature;
     break;
     } else {
