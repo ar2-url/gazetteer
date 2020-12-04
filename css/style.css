@@ -114,42 +114,49 @@ main.container-fluid {
     max-height: 40vh;
     min-height: 20vh;
     overflow: auto;
+    margin: 0 auto;
 }
 
-.leaflet-popup-content-wrapper > p {
-    top: 30px;
+#popContent {
+    position: relative;
+    top: 35px;
 }
 
 #popHeader {
     color: #F5F5F5;
-    background-color: rgb(191, 191, 191);
-    height: 8vh;
+    opacity: 1;
+    height: 5vh;
     margin: 0;
-    padding: 1vh;
+    padding: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: fit-content;
 }
 
 .leaflet-popup-content-wrapper::-webkit-scrollbar-track
 {
-box-shadow: inset 0 0 6px rgba(0,0,0,0.6);   
--webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
-background-color: #CCCCCC;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.6);   
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.6);
+    background-color: #CCCCCC;
 }
 
 .leaflet-popup-content-wrapper::-webkit-scrollbar
 {
     width: 0;
-background: transparent;
+    background: transparent;
 }
 
 .leaflet-popup-content-wrapper::-webkit-scrollbar-thumb
 {
-background-color: #FFF;
-background-image: -webkit-linear-gradient(90deg,
-  rgba(0, 0, 0, 1) 0%,
-  rgba(0, 0, 0, 1) 25%,
-  transparent 100%,
-  rgba(0, 0, 0, 1) 75%,
-  transparent)
+    background-color: #FFF;
+    background-image: -webkit-linear-gradient(90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 25%,
+    transparent 100%,
+    rgba(0, 0, 0, 1) 75%,
+    transparent)
 }
 
 .col-8 {
@@ -157,7 +164,7 @@ background-image: -webkit-linear-gradient(90deg,
 }
 
 .leaflet-popup-close-button {
-    right: 5px !important;
+    right: 1px !important;
 }
 
 .card {
@@ -201,4 +208,3 @@ background-image: -webkit-linear-gradient(90deg,
 #mymodal {
     border-radius: 5px;
 }
-
