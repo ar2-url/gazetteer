@@ -23,9 +23,10 @@ $(window).on('load', function () {
     $('#mymodal').modal('show')
     }).addTo(mymap)
 
+ 
   let night = L.terminator()
   let dayLayer = {
-    'map': basic
+    'day': basic
   }
   let nightLayer = {
     'night': night
@@ -60,13 +61,13 @@ $(window).on('load', function () {
     let countries = JSON.parse(data);
     let str = ''
     for (let i = 0; i < countries.length; i++) {
-        str +=`<a id="${countries[i]['name']}" class="dropdown-item" href="#">` + countries[i]['name'] + `<span class="float-right">${countries[i]['code']}</span</a>`
+        str +=`<a id="${countries[i]['code']}" class="dropdown-item" href="#">` + countries[i]['name'] + `<span class="float-right">${countries[i]['code']}</span</a>`
     }
   
     $('#countries').html(str)
   
     for (let i = 0; i < countries.length; i++) {
-      $(`#${countries[i]['name']}`).bind('click', renderInfo)
+      $(`#${countries[i]['code']}`).bind('click', renderInfo)
     }
     
   })
@@ -81,9 +82,7 @@ $(window).on('load', function () {
           data: { lat: lat, lng: lng},
           success: response => {
               let name = JSON.parse(response)
-              
-              console.log(name)
-              getCountrySpec(name)
+              getCountrySpec(name['country_ISO3'])
           }
       })
   })    
@@ -91,8 +90,7 @@ $(window).on('load', function () {
   // get country name for specs
   
   const renderInfo = event => {
-    getCountrySpec(event.target.id)    
-   
+    getCountrySpec(event.target.id)     
   }
   
   //get country specs
@@ -111,8 +109,7 @@ $(window).on('load', function () {
           success: result => {
               let resultDec = JSON.parse(result)
               console.log(resultDec)
-              
-              $('#label').html(`<span>${resultDec['name']}</span>`)
+              $('#label').html(`<span>${resultDec['feature']['properties']['name']}</span>`)
               layerGroup.clearLayers()
               if (border) {
                 mymap.removeLayer(border)
@@ -131,7 +128,7 @@ $(window).on('load', function () {
                           url: url,
                           dataType: 'json',
                           success: data => {
-                            popup.setContent(`<h5 id="popHeader" class="sticky-top font-weight-bold text-center">${resultDec['cities'][i]['city']}</h5><p>Population: ${resultDec['cities'][i]['population']}</p><p>${data['query']['pages'][0]['extract']}<p>`)
+                            popup.setContent(`<h5 id="popHeader" class="sticky-top bg-dark font-weight-bold text-center">${resultDec['cities'][i]['city']}</h5><p>Population: ${resultDec['cities'][i]['population']}</p><p>${data['query']['pages'][0]['extract']}<p>`)
                             popup.update()
                           }
                         })
@@ -147,7 +144,7 @@ $(window).on('load', function () {
                           url: url,
                           dataTpe: 'json',
                           success: capital => {
-                            popup.setContent(`<h5 id="popHeader" class="sticky-top font-weight-bold text-center">${resultDec['capital']}</h5><p>Population: ${resultDec['cities'][i]['population']}</p><p>${capital['query']['pages'][0]['extract']}</p>`)
+                            popup.setContent(`<h5 id="popHeader" class="sticky-top bg-dark font-weight-bold text-center">${resultDec['capital']}</h5><p>Population: ${resultDec['cities'][i]['population']}</p><p>${capital['query']['pages'][0]['extract']}</p>`)
                             popup.update()
                           }
                         })
@@ -172,7 +169,7 @@ $(window).on('load', function () {
               <div class="card text-center w-90 mr-5">
                   <img class="card-img-top" src="${resultDec['flag']}" alt="Card image">
                   <div class="card-body">
-                      <h4 class="card-title">${myCountry}</h4>
+                      <h4 class="card-title">${resultDec['feature']['properties']['name']}</h4>
                       <p class="card-text">Capital: ${resultDec['capital']}</p>
                       <p class="card-text">Population: ${resultDec['population']}</p>
                       <p class="card-text">Currency: ${resultDec['curr_Name']}/${resultDec['curr_Code']}/${resultDec['curr_Symbol']}</p>
