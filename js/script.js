@@ -109,6 +109,7 @@ $(window).on('load', function () {
           success: result => {
               let resultDec = JSON.parse(result)
               console.log(resultDec)
+              console.log(resultDec['photos'])
               $('#label').html(`<span>${resultDec['feature']['properties']['name']}</span>`)
               layerGroup.clearLayers()
               if (border) {
@@ -116,7 +117,7 @@ $(window).on('load', function () {
               }
               border = L.geoJSON(resultDec['feature']).addTo(mymap)
               mymap.fitBounds(border.getBounds())
-              if (resultDec['status'] == 200) {
+              if (resultDec['status'] == 200 && typeof resultDec['cities'] != 'undefined') {
                for (let i = 0; i < resultDec['cities'].length; i++) {
                      if (resultDec['cities'][i]['city'] != resultDec['capital']) {  
                      marker = new L.marker([resultDec['cities'][i]['lat'], resultDec['cities'][i]['lng']], {icon: cityIcon})
@@ -153,16 +154,22 @@ $(window).on('load', function () {
                      }
                   }
                   layerGroup.addTo(mymap)
-              }   
-                    
-              let photos = ''
-              if (resultDec['photos'] != 'No data') {
-                  for (let i = 1; i < resultDec['photos'].length; i++) {
+              }  
+               
+              let photos = []      
+              if (typeof resultDec['photos'] != 'undefined') {
+                photos = `
+                <div class="carousel-item active">
+                <img class="d-block w-100" src="${resultDec['photos'][0]}" />
+                </div>`
+                for (let i = 1; i < resultDec['photos'].length; i++) {
                       photos += `
                           <div class="carousel-item">
                           <img class="d-block w-100" src="${resultDec['photos'][i]}" />
                           </div>`
-                  }
+                }
+              } else {
+                photos = 'No data'
               }
               // sliding menu content
               menuCont.setContents(`
@@ -183,10 +190,7 @@ $(window).on('load', function () {
                  </div>
               </div>
               <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-              <div class="carousel-inner">
-              <div class="carousel-item active">
-              <img class="d-block w-100" src="${resultDec['photos'][0]}" />
-              </div>`
+              <div class="carousel-inner">`
                   + photos +
               `</div>
               <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -202,39 +206,51 @@ $(window).on('load', function () {
               // weather modal content
               let weather = '';
               
-              for (let i = 0; i < resultDec['weather']['forecast'].length; i++) {
-                weather += `<div id="weatherDescription">
-                            <img src="https://openweathermap.org/img/wn/${resultDec['weather']['forecast'][i]['icon']}@2x.png" /><br>
-                            <span>${resultDec['weather']['forecast'][i]['description']}</span><br>
-                            <span>${resultDec['weather']['forecast'][i]['hour']}</span>
-                            </div>`
-              }
-
-              $('#mymodal').html(`
+              if (typeof resultDec['weather']['forecast'] != 'undefined') {
+                for (let i = 0; i < resultDec['weather']['forecast'].length; i++) {
+                  weather += `<div id="weatherDescription">
+                              <img src="https://openweathermap.org/img/wn/${resultDec['weather']['forecast'][i]['icon']}@2x.png" /><br>
+                              <span>${resultDec['weather']['forecast'][i]['description']}</span><br>
+                              <span>${resultDec['weather']['forecast'][i]['hour']}</span>
+                              </div>`
+                }
+  
+                $('#mymodal').html(`
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div id="modal-header" class="modal-header bg-secondary text-white">
+                        <div class="col-4">
+                          <h4>${resultDec['weather']['day']}</h4>
+                          <p>${resultDec['weather']['date']}</p>
+                        </div>  
+                        <div class="col-8">
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          <span><strong>Temp:</strong> ${resultDec['weather']['temp']}<sup>o</sup>C</span>
+                          <span><strong>Feels like:</strong> ${resultDec['weather']['feels_like']}<sup>o</sup>C</span><br><br>
+                          <span><strong>Sunrise:</strong> ${resultDec['weather']['sunrise']}</span>
+                          <span><strong>Sunset:</strong> ${resultDec['weather']['sunset']}</span>
+                          
+                        </div>  
+                      </div>
+                      <div id="element" class="modal-body bg-secondary text-white w-70">`
+                      
+                      + weather +
+  
+                      `</div>
+                    </div>
+                 </div>
+                `)
+              } else {
+                $('#mymodal').html(`
                 <div class="modal-dialog">
                   <div class="modal-content">
-                    <div id="modal-header" class="modal-header bg-secondary text-white">
-                      <div class="col-4">
-                        <h4>${resultDec['weather']['day']}</h4>
-                        <p>${resultDec['weather']['date']}</p>
-                      </div>  
-                      <div class="col-8">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <span><strong>Temp:</strong> ${resultDec['weather']['temp']}<sup>o</sup>C</span>
-                        <span><strong>Feels like:</strong> ${resultDec['weather']['feels_like']}<sup>o</sup>C</span><br><br>
-                        <span><strong>Sunrise:</strong> ${resultDec['weather']['sunrise']}</span>
-                        <span><strong>Sunset:</strong> ${resultDec['weather']['sunset']}</span>
-                        
-                      </div>  
+                    <div id="element" class="modal-body bg-secondary text-white w-70">
+                      <h2>No data</h2>
                     </div>
-                    <div id="element" class="modal-body bg-secondary text-white w-70">`
-                    
-                    + weather +
-
-                    `</div>
                   </div>
                </div>
               `)
+              }
           }
       })
   }
