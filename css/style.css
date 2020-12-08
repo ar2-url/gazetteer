@@ -79,6 +79,21 @@
     flex: row nowrap;
 }
 
+#element, .modal-header {
+    background: linear-gradient(to right, rgb(41, 128, 185), rgb(109, 213, 250), rgb(255, 255, 255));
+}
+
+.modal-header {
+    height: 25vh;
+}
+
+.modal-header .close {
+    position: relative;
+    top: 5px;
+    right: 5px;
+    padding: 0;
+}
+
 #element > div {
     width: auto;
 }
@@ -127,7 +142,8 @@ main.container-fluid {
 }
 
 #popHeader {
-    color: #F5F5F5;
+    color: rgb(255, 255, 255, 1);
+    background-color: black;
     opacity: 1;
     height: 5vh;
     margin: 0;
@@ -179,16 +195,6 @@ main.container-fluid {
     border: 1px solid #000;
 }
 
-#weatherDescription {
-    transition: all 0.5s ease;
-    margin: 10px;
-    box-shadow: 1px 1px 1px 1px black;
-    border-radius: 5px;
-}
-
-#weatherDescription:hover {
-    transform: scale(1.2);
-}
 
 #element::-webkit-scrollbar-track
 {
@@ -210,5 +216,11 @@ main.container-fluid {
 }
 
 #mymodal {
-    border-radius: 5px;
+    border-radius: 10px;
+}
+
+#weatherEl {
+    display: flex;
+    flex-flow: row nowrap;
+    overflow-x: auto;
 }

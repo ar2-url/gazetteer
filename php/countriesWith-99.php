@@ -168,36 +168,33 @@ foreach ($data['rates'] as $currency => $value) {
 // get weather forecast
 
 $key = 'ad6e24a64254b73ff9e9cc4c08e43823';
-$url ='https://api.openweathermap.org/data/2.5/onecall?lat=' . $outcome['capitalLat'] . '&lon=' . $outcome['capitalLon'] . '&appid=' . $key;
+$url = 'https://api.openweathermap.org/data/2.5/onecall?lat=50&lon=-3&exclude=minutely,hourly,alerts&appid=' . $key;
 
 $ch = curl_init($url);
 
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
 curl_setopt($ch, CURLOPT_URL, $url);
 
 $result = curl_exec($ch);
-$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 $err = curl_error($ch);
+$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 curl_close($ch);
+
 $decoded = json_decode($result, true);
 
 if ($httpCode == 200) {
-	$outcome['weather']['day'] = date('l', $decoded['current']['dt']);
-	$outcome['weather']['date'] = date('d F', $decoded['current']['dt']);
-	$outcome['weather']['temp'] = round($decoded['current']['temp'] - 273);
-	$outcome['weather']['feels_like'] = round($decoded['current']['feels_like'] - 273);
-	$outcome['weather']['sunrise'] = date('H:i', $decoded['current']['sunrise']);
-	$outcome['weather']['sunset'] = date('H:i', $decoded['current']['sunset']);
-	for ($i = 0; $i < count($decoded['hourly']); $i++ ) {
-		$outcome['weather']['forecast'][$i]['hour'] = date('H:i', $decoded['hourly'][$i]['dt']);
-		$outcome['weather']['forecast'][$i]['description'] = $decoded['hourly'][$i]['weather'][0]['description'];
-		$outcome['weather']['forecast'][$i]['icon'] = $decoded['hourly'][$i]['weather'][0]['icon'];
-	}
+  for ($i = 0; $i < count($decoded['daily']); $i++) {
+    $outcome['weather']['forecast'][$i]['date'] = date('d F', $decoded['daily'][$i]['dt']);
+    $outcome['weather']['forecast'][$i]['day'] = date('l', $decoded['daily'][$i]['dt']);
+    $outcome['weather']['forecast'][$i]['temp_day'] = round($decoded['daily'][$i]['temp']['day'] - 273);
+    $outcome['weather']['forecast'][$i]['temp_night'] = round($decoded['daily'][$i]['temp']['night'] - 273);
+    $outcome['weather']['forecast'][$i]['description'] = $decoded['daily'][$i]['weather'][0]['description'];
+    $outcome['weather']['forecast'][$i]['icon'] = $decoded['daily'][$i]['weather'][0]['icon'];
+  }
 } else {
-	$outcome['weather'] = 'No data';
+  $outcome['weather'] = $httpCode;
 }
 // **************************************
 // get wiki paragraph
