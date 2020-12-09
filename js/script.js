@@ -39,9 +39,10 @@ $(window).on('load', function () {
     'night': night
   }
   L.control.layers(dayLayer, nightLayer).addTo(mymap)
-  
+
   setInterval(() => {
-    night.setTime()
+    let currentTimestamp = new Date().getTime()
+    night.setTime(currentTimestamp)
   }, 60000)
 
   let cityIcon = new L.ExtraMarkers.icon({
@@ -220,9 +221,7 @@ $(window).on('load', function () {
                               <p style="font-size: 10px">${resultDec['weather']['forecast'][i]['temp_day']}<sup>o</sup>C/${resultDec['weather']['forecast'][i]['temp_night']}<sup>o</sup>C</p>
                             </div>`
               }
-              console.log(weather)
               if (typeof resultDec['weather']['forecast'] != 'undefined') {
-                  
                 $('#mymodal').html(`
                   <div class="modal-dialog">
                     <div class="modal-content">
