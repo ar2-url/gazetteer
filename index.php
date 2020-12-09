@@ -29,7 +29,7 @@
       
       <div class="collapse navbar-collapse" id="items1">
         <ul class="nav navbar-nav ml-auto">
-          <li class="nav-item dropdown p-1 bg-dark">
+          <li class="nav-item dropdown px-3 bg-dark">
             <a id="label" class="nav-link dropdown-toggle" href="#" id="navbardropdown" data-toggle="dropdown" style="display: inline-block;">
               Countries
             </a>
