@@ -229,7 +229,7 @@ $(window).on('load', function () {
                     <div class="modal-header">
                       <div class="row w-100">
                         <div class="col-4 text-center">
-                          <img src="https://openweathermap.org/img/wn/${resultDec['weather']['forecast'][0]['icon']}@2x.png" style="width: 200px; top: 10px"/>
+                          <img src="https://openweathermap.org/img/wn/${resultDec['weather']['forecast'][0]['icon']}@2x.png" style="width: 160px; top: 10px"/>
                         </div>
                         <div class="col-8 text-center">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -242,7 +242,7 @@ $(window).on('load', function () {
                         </div>
                       </div>
                     </div>
-                      <div id="element" class="modal-body text-black w-100 container-fluid">
+                      <div id="element" class="modal-body text-black w-100 pr-0">
                           <div id="weatherEl" class="row w-100">`
                            + weather +
                           `</div>
