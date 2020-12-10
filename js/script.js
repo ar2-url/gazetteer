@@ -190,12 +190,7 @@ $(window).on('load', function () {
                       <p class="card-text">Exchange rate: ${resultDec['exRate']}/USD</p>   
                   </div>
               </div><br>
-              <div class="card text-center w-90 mr-2">
-                 <div class="card-body">
-                      <h4 class="card-title">Wikipedia</h4>
-                      <p class="card-text">${resultDec['wiki']}</p><br>
-                 </div>
-              </div>
+
               <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
               <div class="carousel-inner text-black">`
                   + photos +
@@ -208,6 +203,13 @@ $(window).on('load', function () {
                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
               </a>
+              </div>
+
+              <div class="card text-center w-90 mr-2">
+                 <div class="card-body">
+                      <h4 class="card-title">Wikipedia</h4>
+                      <p class="card-text">${resultDec['wiki']}</p><br>
+                 </div>
               </div>
               `) 
               // weather modal content
