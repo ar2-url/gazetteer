@@ -43,7 +43,7 @@
 }
 
 .carousel-item {
-    height: 80vh;
+    height: fit-content;
 }
 
 .modal-backdrop.fade.show {
