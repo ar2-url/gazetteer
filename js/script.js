@@ -38,7 +38,7 @@ $(window).on('load', function () {
   let nightLayer = {
     'night': night
   }
-  L.control.layers(dayLayer, nightLayer).addTo(mymap)
+  L.control.layers(dayLayer, nightLayer, {collapsed: false}).addTo(mymap)
 
   setInterval(() => {
     let currentTimestamp = new Date().getTime()
@@ -116,7 +116,6 @@ $(window).on('load', function () {
           data: {countryName: myCountry},
           success: result => {
               let resultDec = JSON.parse(result)
-              console.log(resultDec)
               $('#label').html(`<span>${resultDec['feature']['properties']['name']}</span>`)
               layerGroup.clearLayers()
               if (border) {
@@ -180,14 +179,14 @@ $(window).on('load', function () {
               }
               // sliding menu content
               menuCont.setContents(`
-              <div class="card text-center w-90 mr-5">
-                  <img class="card-img-top" src="${resultDec['flag']}" alt="Card image">
-                  <div class="card-body">
+              <div class="card text-center sticky-top">
+                  <img id="flag" class="card-img-top" src="${resultDec['flag']}" alt="Card image">
+                  <div id="side-menu-header" class="card-body">
                       <h4 class="card-title">${resultDec['feature']['properties']['name']}</h4>
-                      <p class="card-text">Capital: ${resultDec['capital']}</p>
-                      <p class="card-text">Population: ${resultDec['population']}</p>
-                      <p class="card-text">Currency: ${resultDec['curr_Name']}/${resultDec['curr_Code']}/${resultDec['curr_Symbol']}</p>
-                      <p class="card-text">Exchange rate: ${resultDec['exRate']}/USD</p>   
+                      <p class="card-text"><strong>Capital:</strong> ${resultDec['capital']}</p>
+                      <p class="card-text"><strong>Population:</strong> ${resultDec['population']}</p>
+                      <p class="card-text"><strong>Currency:</strong> ${resultDec['curr_Name']}/${resultDec['curr_Code']}/${resultDec['curr_Symbol']}</p>
+                      <p class="card-text"><strong>Exchange rate:</strong> ${resultDec['exRate']}/USD</p>   
                   </div>
               </div><br>
 
@@ -217,29 +216,31 @@ $(window).on('load', function () {
               for (let i = 1; i < resultDec['weather']['forecast'].length - 1; i++) {
                 let short = resultDec['weather']['forecast'][i]['day'].slice(0, 3)
                 weather += `
-                            <div class="col-2 text-center" style="border-right: 1px solid grey; padding: 0">
+                            <div class="col-2 text-center day${i}" style="border-right: 1px solid grey; padding: 0">
                               <p>${short}</p>
                               <img src="https://openweathermap.org/img/wn/${resultDec['weather']['forecast'][i]['icon']}@2x.png" width="50px"/>
                               <p style="font-size: 10px">${resultDec['weather']['forecast'][i]['temp_day']}<sup>o</sup>C/${resultDec['weather']['forecast'][i]['temp_night']}<sup>o</sup>C</p>
-                            </div>`
+                            </div>`   
               }
               if (typeof resultDec['weather']['forecast'] != 'undefined') {
                 $('#mymodal').html(`
                   <div class="modal-dialog">
                     <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header pr-0">
                       <div class="row w-100">
                         <div class="col-4 text-center">
                           <img src="https://openweathermap.org/img/wn/${resultDec['weather']['forecast'][0]['icon']}@2x.png" style="width: 160px; top: 10px"/>
                         </div>
-                        <div class="col-8 text-center">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                        </button>
+                        <div class="col-7 text-center">
                           <h5>${resultDec['weather']['forecast'][0]['day']}</h5>
                           <p>${resultDec['weather']['forecast'][0]['date']}</p><br>
                           <h5>${resultDec['weather']['forecast'][0]['description']}</h5>
                           <h6>${resultDec['weather']['forecast'][0]['temp_day']}<sup>o</sup>C/${resultDec['weather']['forecast'][0]['temp_night']}<sup>o</sup>C</h6>
+                        </div>
+                        <div class="col-1">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                          </button>
                         </div>
                       </div>
                     </div>
